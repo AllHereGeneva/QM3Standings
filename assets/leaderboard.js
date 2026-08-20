@@ -150,29 +150,19 @@
       var k = e._lat.toFixed(2) + ',' + e._lon.toFixed(2);
       (groups[k] = groups[k] || []).push(e);
     });
-    // Only the GOLD pins (top 20) fan out: top-20 non-VIPs get a UNIT sunflower
-    // rosette (_rx/_ry, scaled canvas-relatively in renderPins) that opens as you
-    // zoom in; everyone below top 20 keeps zero offset so they stay merged into
-    // the city's grey count-bubble. VIPs get a constant-pixel offset so their
-    // profile card is always individually reachable.
+    // Same-city pins get a GEOGRAPHIC rosette (_rx/_ry, scaled canvas-relatively in
+    // renderPins) — glued to the ground, so NO screen-space drift: they sit tight on
+    // the city at low zoom and only fan apart as you zoom in. (A pixel offset here
+    // used to fling the top pin far offshore at low zoom and only settle at full zoom.)
     var GA = 2.399963;   // golden angle -> even sunflower packing
-    var TOP_PX = 42;     // top-3: constant pixel offset -> always pulled clear of the city + solo
     Object.keys(groups).forEach(function (k) {
       var arr = groups[k];
       arr.forEach(function (e) { e._ox = e._oy = e._rx = e._ry = 0; });
       if (arr.length === 1) return;
-      var ni = 0, ti = 0;
-      arr.forEach(function (e) {
-        if (e.rank <= 3) {
-          e._ox = Math.cos(ti * GA) * TOP_PX;
-          e._oy = Math.sin(ti * GA) * TOP_PX;
-          ti++;
-        } else if (e.vip || e.rank <= 20) {   // bio-performers + top-20 fan out (still clusterable)
-          var rr = Math.sqrt(ni + 1);   // +1 so the first pin clears the central grey group
-          e._rx = Math.cos(ni * GA) * rr;
-          e._ry = Math.sin(ni * GA) * rr;
-          ni++;
-        }
+      arr.forEach(function (e, i) {
+        var rr = Math.sqrt(i);   // first pin stays centred on the city; rest fan out
+        e._rx = Math.cos(i * GA) * rr;
+        e._ry = Math.sin(i * GA) * rr;
       });
     });
 
@@ -893,7 +883,7 @@
     // canvas-relative dispersion: ~1.6px between neighbours per zoom level, so the
     // rosette merges into one count-pin at zoom 1 and fans wide open at max zoom,
     // identically on phone and desktop.
-    var disp = 320 / this.cw;   // degrees per unit-rosette step
+    var disp = 160 / this.cw;   // degrees per unit-rosette step (tight: stays on the city, no offshore drift)
     var pts = [];
     this.mapPins.forEach(function (e) {
       if (fActive && !this.entryMatches(e)) return;   // filter: only matching participants
