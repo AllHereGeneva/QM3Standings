@@ -17,7 +17,7 @@
       "city": "Sheffield", "country": "United Kingdom", "cmi": 336, "lat": 53.3811, "lon": -1.4701,
       "vip": {
         "name": "Hisami Tsurumori",
-        "photo": "assets/participants/hisami-tsurumori.jpg?v=16",
+        "photo": "https://allheregeneva.github.io/QM3Standings/assets/participants/hisami-tsurumori.jpg?v=16",
         "tag": "Tokyo 2025 Top Performer",
         "bio": "Originally from Japan, now in Sheffield, Hisami has practiced Samatha meditation in the Theravada tradition for 16+ years as a tool for mental and physical well-being."
       }
@@ -27,7 +27,7 @@
       "city": "Tokyo", "country": "Japan", "cmi": 284, "lat": 35.6895, "lon": 139.6917,
       "vip": {
         "name": "Yu Mizuno",
-        "photo": "assets/participants/yu-mizuno.jpg?v=16",
+        "photo": "https://allheregeneva.github.io/QM3Standings/assets/participants/yu-mizuno.jpg?v=16",
         "bio": "A Tokyo-based certified yoga teacher whose practice spans Vipassana, Tibetan Buddhist retreats, pranayama and Kriya yoga, and regular Zen meditation at a Tokyo temple."
       }
     },

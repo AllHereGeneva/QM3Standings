@@ -5,6 +5,11 @@
 /data3/
 /build/
 
+# secrets — this repo is PUBLIC (GitHub Pages): a committed key would be exposed
+.env
+.env.*
+!.env.example
+
 # local tooling / OS cruft
 .claude/
 .DS_Store
