@@ -619,7 +619,8 @@
       var pin = ev.target.closest('.ahl__pin'); if (!pin) return;
       if (self._cardMode === 'hover') self.closeVipCard();
       self.hideTip();
-      var ids = (pin.dataset.ids || '').split(',').map(Number).filter(function (n) { return !isNaN(n); });
+      var ids = (pin.dataset.ids || '').split(',').map(Number)
+        .filter(function (n) { return !isNaN(n) && self.entries[n] && !self.entries[n]._dot; });   // skip score-less dots
       if (ids.length) self.selectPins(ids, pin);
     });
 
@@ -999,7 +1000,10 @@
   AHLeaderboard.prototype.showTip = function (clu) {
     var tip = this.el.tip, best = clu.items[0];
     var html;
-    if (clu.items.length > 1) {
+    if (best._dot) {
+      // score-less marker: just the place name
+      html = '<div class="ahl__tip-city">' + esc(best.city ? best.city + ', ' + best.country : best.country) + '</div>';
+    } else if (clu.items.length > 1) {
       html = '<div class="ahl__tip-rank">' + clu.items.length + ' meditators</div>' +
         '<div class="ahl__tip-city">' + esc(best.city) + '</div>' +
         '<div class="ahl__tip-country">' + esc(best.country) + '</div>' +

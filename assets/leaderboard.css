@@ -323,8 +323,8 @@
 .ahl__pin.is-sub:hover .ahl__pin-dot,
 .ahl__pin.is-sub.is-active .ahl__pin-dot { background: var(--ahl-accent); transform: scale(1.28); }
 
-/* score-less location marker: a plain YELLOW, NON-interactive dot (no hover, no click) */
-.ahl__pin.is-dot { pointer-events: none; z-index: 1; }
+/* score-less location marker: a plain YELLOW dot — hoverable (city name only), no click-filter */
+.ahl__pin.is-dot { z-index: 1; }
 .ahl__pin.is-dot .ahl__pin-dot {
   width: 9px; height: 9px;
   background: var(--ahl-accent);
