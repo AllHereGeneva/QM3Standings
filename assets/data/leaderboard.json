@@ -5,7 +5,7 @@
     "scaleMax": 385,
     "updated": "2026-07-18",
     "count": "400+",
-    "listTitle": "Global Standings",
+    "listTitle": "QM3 Standings",
     "oneDotEach": true,
     "note": "SMI coming up soon.",
     "learnMoreUrl": "https://www.wml.org"
@@ -42,6 +42,8 @@
     { "city": "Los Angeles", "country": "United States", "dot": true, "lat": 34.0522, "lon": -118.2437 },
     { "city": "Sacramento", "country": "United States", "dot": true, "lat": 38.5816, "lon": -121.4944 },
     { "city": "Chennai", "country": "India", "dot": true, "lat": 13.0827, "lon": 80.2707 },
+    { "city": "Tiruvannamalai", "country": "India", "dot": true, "lat": 12.2253, "lon": 79.0747 },
+    { "city": "Hyderabad", "country": "India", "dot": true, "lat": 17.385, "lon": 78.4867 },
     { "city": "New Delhi", "country": "India", "dot": true, "lat": 28.6139, "lon": 77.209 },
     { "city": "Kamakura", "country": "Japan", "dot": true, "lat": 35.3192, "lon": 139.5466 },
     { "city": "", "country": "Germany", "dot": true, "lat": 52.52, "lon": 13.405 },

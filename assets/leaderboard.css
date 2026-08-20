@@ -323,13 +323,13 @@
 .ahl__pin.is-sub:hover .ahl__pin-dot,
 .ahl__pin.is-sub.is-active .ahl__pin-dot { background: var(--ahl-accent); transform: scale(1.28); }
 
-/* score-less location marker: a plain, NON-interactive dot (no hover, no click) */
+/* score-less location marker: a plain YELLOW, NON-interactive dot (no hover, no click) */
 .ahl__pin.is-dot { pointer-events: none; z-index: 1; }
 .ahl__pin.is-dot .ahl__pin-dot {
   width: 9px; height: 9px;
-  background: rgba(180,196,228,.55);
+  background: var(--ahl-accent);
   border-color: rgba(255,255,255,.5);
-  box-shadow: 0 0 0 2px rgba(120,152,224,.12), 0 1px 3px rgba(0,0,0,.35);
+  box-shadow: 0 0 0 2px var(--ahl-accent-soft), 0 1px 3px rgba(0,0,0,.35);
 }
 
 /* bio-performer marker: a gold ring (distinct design; clusters like any pin) */
