@@ -67,7 +67,7 @@
 
     // ESSENTIAL (small): scores + geocoder — render the standings + pins ASAP.
     Promise.all([
-      fetch(this.opt.dataUrl, { cache: 'no-store' }).then(function (r) { return r.json(); }),
+      this.fetchStandings(),
       fetch(this.opt.gazetteerUrl).then(function (r) { return r.json(); }).catch(function () { return { c: {}, cc: {}, cn: {} }; })
     ]).then(function (res) {
       self.data = res[0];
@@ -86,6 +86,29 @@
       self.dirty = true;
       self.render();
     }).catch(function () { /* no map is fine */ });
+  };
+
+  // Load the standings document. Primary source = the read endpoint on the EEG /
+  // neuro API (split-ready via opt.eegApiBase). Falls back to the bundled local
+  // file if the endpoint is unset, unreachable, CORS-blocked, or errors — so the
+  // page never goes blank. Always no-store (single current document, updated in place).
+  AHLeaderboard.prototype.fetchStandings = function () {
+    var self = this;
+    var local = function () {
+      return fetch(self.opt.dataUrl, { cache: 'no-store' }).then(function (r) { return r.json(); });
+    };
+    var base = this.opt.eegApiBase;
+    if (!base) return local();
+    var url = String(base).replace(/\/+$/, '') + '/eeg/standings/qm3';
+    var ctl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
+    var timer = ctl ? setTimeout(function () { ctl.abort(); }, 3000) : null;
+    return fetch(url, { cache: 'no-store', signal: ctl ? ctl.signal : undefined })
+      .then(function (r) { if (timer) clearTimeout(timer); if (!r.ok) throw new Error('standings ' + r.status); return r.json(); })
+      .catch(function (err) {
+        if (timer) clearTimeout(timer);
+        console.warn('[AHLeaderboard] standings endpoint unavailable — using local file.', err && err.message);
+        return local();
+      });
   };
 
   // ---- geocoding ----
