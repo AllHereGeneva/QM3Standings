@@ -1,6 +1,6 @@
 {
   "meta": {
-    "title": "QM3 Standings",
+    "title": "World Meditation Challenge",
     "unit": "CMI",
     "scaleMax": 385,
     "updated": "2026-07-18",
@@ -11,10 +11,26 @@
     "learnMoreUrl": "https://www.wml.org"
   },
   "entries": [
-    { "city": "San Francisco", "country": "United States", "cmi": 385.2, "lat": 37.7749, "lon": -122.4194 },
-    { "city": "Tokyo", "country": "Japan", "cmi": 364.8, "lat": 35.6895, "lon": 139.6917 },
     {
-      "city": "Sheffield", "country": "United Kingdom", "cmi": 336, "lat": 53.3811, "lon": -1.4701,
+      "city": "San Francisco",
+      "country": "United States",
+      "cmi": 385.2,
+      "lat": 37.7749,
+      "lon": -122.4194
+    },
+    {
+      "city": "Tokyo",
+      "country": "Japan",
+      "cmi": 364.8,
+      "lat": 35.6895,
+      "lon": 139.6917
+    },
+    {
+      "city": "Sheffield",
+      "country": "United Kingdom",
+      "cmi": 336,
+      "lat": 53.3811,
+      "lon": -1.4701,
       "vip": {
         "name": "Hisami Tsurumori",
         "photo": "https://allheregeneva.github.io/QM3Standings/assets/participants/hisami-tsurumori.jpg?v=16",
@@ -22,33 +38,150 @@
         "bio": "Originally from Japan, now in Sheffield, Hisami has practiced Samatha meditation in the Theravada tradition for 16+ years as a tool for mental and physical well-being."
       }
     },
-    { "city": "Sydney", "country": "Australia", "cmi": 225, "lat": -33.8688, "lon": 151.2093 },
     {
-      "city": "Tokyo", "country": "Japan", "cmi": 284, "lat": 35.6895, "lon": 139.6917,
+      "city": "Sydney",
+      "country": "Australia",
+      "cmi": 225,
+      "lat": -33.8688,
+      "lon": 151.2093
+    },
+    {
+      "city": "Tokyo",
+      "country": "Japan",
+      "cmi": 284,
+      "lat": 35.6895,
+      "lon": 139.6917,
       "vip": {
         "name": "Yu Mizuno",
         "photo": "https://allheregeneva.github.io/QM3Standings/assets/participants/yu-mizuno.jpg?v=16",
         "bio": "A Tokyo-based certified yoga teacher whose practice spans Vipassana, Tibetan Buddhist retreats, pranayama and Kriya yoga, and regular Zen meditation at a Tokyo temple."
       }
     },
-    { "city": "Sera Jey", "country": "India", "cmi": 283.0, "lat": 12.4239, "lon": 75.9739 },
-    { "city": "Bengaluru", "country": "India", "cmi": 262.6, "lat": 12.9716, "lon": 77.5946 },
-    { "city": "Tokyo", "country": "Japan", "cmi": 259.9, "lat": 35.6895, "lon": 139.6917 },
-    { "city": "Oxford", "country": "United Kingdom", "cmi": 259.5, "lat": 51.752, "lon": -1.2577 },
-    { "city": "Bengaluru", "country": "India", "cmi": 257.9, "lat": 12.9716, "lon": 77.5946 },
-
-    { "city": "Dubai", "country": "United Arab Emirates", "dot": true, "lat": 25.2048, "lon": 55.2708 },
-    { "city": "Kuala Lumpur", "country": "Malaysia", "dot": true, "lat": 3.139, "lon": 101.6869 },
-    { "city": "Los Angeles", "country": "United States", "dot": true, "lat": 34.0522, "lon": -118.2437 },
-    { "city": "Sacramento", "country": "United States", "dot": true, "lat": 38.5816, "lon": -121.4944 },
-    { "city": "Chennai", "country": "India", "dot": true, "lat": 13.0827, "lon": 80.2707 },
-    { "city": "Tiruvannamalai", "country": "India", "dot": true, "lat": 12.2253, "lon": 79.0747 },
-    { "city": "Hyderabad", "country": "India", "dot": true, "lat": 17.385, "lon": 78.4867 },
-    { "city": "New Delhi", "country": "India", "dot": true, "lat": 28.6139, "lon": 77.209 },
-    { "city": "Kamakura", "country": "Japan", "dot": true, "lat": 35.3192, "lon": 139.5466 },
-    { "city": "", "country": "Germany", "dot": true, "lat": 52.52, "lon": 13.405 },
-    { "city": "", "country": "France", "dot": true, "lat": 48.8566, "lon": 2.3522 },
-    { "city": "", "country": "Romania", "dot": true, "lat": 44.4268, "lon": 26.1025 },
-    { "city": "", "country": "Brazil", "dot": true, "lat": -23.5505, "lon": -46.6333 }
+    {
+      "city": "Sera Jey",
+      "country": "India",
+      "cmi": 283.0,
+      "lat": 12.4239,
+      "lon": 75.9739
+    },
+    {
+      "city": "Bengaluru",
+      "country": "India",
+      "cmi": 262.6,
+      "lat": 12.9716,
+      "lon": 77.5946
+    },
+    {
+      "city": "Tokyo",
+      "country": "Japan",
+      "cmi": 259.9,
+      "lat": 35.6895,
+      "lon": 139.6917
+    },
+    {
+      "city": "Oxford",
+      "country": "United Kingdom",
+      "cmi": 259.5,
+      "lat": 51.752,
+      "lon": -1.2577
+    },
+    {
+      "city": "Bengaluru",
+      "country": "India",
+      "cmi": 257.9,
+      "lat": 12.9716,
+      "lon": 77.5946
+    },
+    {
+      "city": "Dubai",
+      "country": "United Arab Emirates",
+      "dot": true,
+      "lat": 25.2048,
+      "lon": 55.2708
+    },
+    {
+      "city": "Kuala Lumpur",
+      "country": "Malaysia",
+      "dot": true,
+      "lat": 3.139,
+      "lon": 101.6869
+    },
+    {
+      "city": "Los Angeles",
+      "country": "United States",
+      "dot": true,
+      "lat": 34.0522,
+      "lon": -118.2437
+    },
+    {
+      "city": "Sacramento",
+      "country": "United States",
+      "dot": true,
+      "lat": 38.5816,
+      "lon": -121.4944
+    },
+    {
+      "city": "Chennai",
+      "country": "India",
+      "dot": true,
+      "lat": 13.0827,
+      "lon": 80.2707
+    },
+    {
+      "city": "Tiruvannamalai",
+      "country": "India",
+      "dot": true,
+      "lat": 12.2253,
+      "lon": 79.0747
+    },
+    {
+      "city": "Hyderabad",
+      "country": "India",
+      "dot": true,
+      "lat": 17.385,
+      "lon": 78.4867
+    },
+    {
+      "city": "New Delhi",
+      "country": "India",
+      "dot": true,
+      "lat": 28.6139,
+      "lon": 77.209
+    },
+    {
+      "city": "Kamakura",
+      "country": "Japan",
+      "dot": true,
+      "lat": 35.3192,
+      "lon": 139.5466
+    },
+    {
+      "city": "",
+      "country": "Germany",
+      "dot": true,
+      "lat": 52.52,
+      "lon": 13.405
+    },
+    {
+      "city": "",
+      "country": "France",
+      "dot": true,
+      "lat": 48.8566,
+      "lon": 2.3522
+    },
+    {
+      "city": "",
+      "country": "Romania",
+      "dot": true,
+      "lat": 44.4268,
+      "lon": 26.1025
+    },
+    {
+      "city": "",
+      "country": "Brazil",
+      "dot": true,
+      "lat": -23.5505,
+      "lon": -46.6333
+    }
   ]
 }

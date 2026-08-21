@@ -75,7 +75,7 @@ document complet — c'est la seule opération destructive de la chaîne.
 ```jsonc
 {
   "meta": {
-    "title": "QM3 Standings", "listTitle": "QM3 Standings",
+    "title": "World Meditation Challenge", "listTitle": "QM3 Standings",
     "unit": "CMI",            // le libellé de la métrique
     "scaleMax": 385,          // borne haute des barres
     "updated": "2026-07-18",
@@ -113,6 +113,13 @@ la mauvaise ville est une invention — c'est déjà arrivé, ne pas recommencer
 
 > Vocabulaire : **CMI** est la métrique (c'est le libellé affiché).
 > **QM3** est la méthode de mesure (les 3 meilleures minutes). Ne pas confondre les deux.
+
+> **`meta.title` n'est plus lu par la page.** Le titre de la une est le nom de
+> l'événement — « World Meditation Challenge » — et il est fixe dans
+> `assets/leaderboard.js`. Le laisser piloter par le flux remettait « QM3 Standings »
+> à chaque chargement, puisque c'est encore ce que renvoie
+> `GET /eeg/standings/qm3`. « QM3 Standings » est passé au sur-titre. `meta.listTitle`
+> pilote toujours le panneau de classement, lui.
 
 ---
 

@@ -253,8 +253,8 @@
             '<a class="ahl__nav-cta" href="mailto:hello@wml.org">Join the League</a>' +
           '</nav>' +
           '<div class="ahl__hero">' +
-            '<span class="ahl__eyebrow">The Gathering of Meditators</span>' +
-            '<h2 class="ahl__title" data-ahl="title">The Gathering of Meditators</h2>' +
+            '<span class="ahl__eyebrow">QM3 Standings</span>' +
+            '<h2 class="ahl__title" data-ahl="title">World Meditation Challenge</h2>' +
             '<div class="ahl__stats" data-ahl="stats"></div>' +
           '</div>' +
           '<button type="button" class="ahl__scrollcue" data-ahl="scrollcue" aria-label="Scroll to the map">' +
@@ -344,7 +344,11 @@
   };
 
   AHLeaderboard.prototype.populateHeader = function (meta) {
-    if (meta.title) this.el.title.textContent = meta.title;
+    // The hero title is deliberately NOT taken from meta.title. It's the name of the
+    // event, not a property of a scores feed — and the feed (the API's
+    // /eeg/standings/qm3 meta) still says "QM3 Standings" there, which would put the
+    // old name back on every load. That name now sits in the eyebrow above it.
+    // meta.listTitle still drives the standings panel, which is feed-owned.
     this.el.listtitle.textContent = meta.listTitle || 'QM3 Standings';
 
     var countries = {};
