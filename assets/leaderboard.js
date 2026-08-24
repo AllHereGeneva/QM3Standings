@@ -29,6 +29,7 @@
   var MAP = { lonMin: -180, lonMax: 180, latMin: -58, latMax: 82 };
   var WORLD_ASPECT = (MAP.lonMax - MAP.lonMin) / (MAP.latMax - MAP.latMin);
   var MAX_ZOOM = 30;   // ~3/4 of the former cap (40)
+  var LABEL_ZOOM = 5;  // from this zoom in, pins reveal their city name
 
   // ---- helpers ----
   function norm(s) {
@@ -138,7 +139,7 @@
       .sort(function (a, b) { return b.cmi - a.cmi; });
     var dots = raw.filter(function (e) { return e.dot || typeof e.cmi !== 'number'; });
     scored.forEach(function (e, i) { e.rank = i + 1; e._dot = false; });
-    dots.forEach(function (e) { e.rank = 0; e._dot = true; });
+    dots.forEach(function (e) { e.rank = 0; e._dot = true; e._noHover = !!e.noHover; });
     var entries = scored.concat(dots);
     this.scoredCount = scored.length;
 
@@ -947,7 +948,7 @@
     while (pool.length < clusters.length) {
       var node = document.createElement('div');
       node.className = 'ahl__pin';
-      node.innerHTML = '<span class="ahl__pin-dot"></span>';
+      node.innerHTML = '<span class="ahl__pin-dot"></span><span class="ahl__pin-label"></span>';
       layer.appendChild(node);
       pool.push(node);
     }
@@ -964,20 +965,24 @@
       el.dataset.count = clu.items.length;
       el.dataset.ids = clu.items.map(function (e) { return e.id; }).join(',');
       var best = clu.items[0];
-      var dot = el.firstChild;
+      var dot = el.firstChild, label = el.lastChild;
       el.classList.remove('is-rank-1', 'is-rank-2', 'is-rank-3');
       if (clu.items.length > 1) {
-        el.classList.add('is-cluster'); el.classList.remove('is-top', 'is-vip', 'is-dot');
+        el.classList.add('is-cluster'); el.classList.remove('is-top', 'is-vip', 'is-dot', 'is-nohover');
         dot.textContent = clu.items.length;
       } else {
         el.classList.remove('is-cluster');
         var isDot = !!best._dot;                       // score-less, non-interactive marker
         el.classList.toggle('is-dot', isDot);
+        el.classList.toggle('is-nohover', isDot && !!best._noHover);   // silent marker: no hover, no pulse, no label
         el.classList.toggle('is-top', !isDot && best.rank <= 3);
         if (!isDot && best.rank <= 3) el.classList.add('is-rank-' + best.rank);
         el.classList.toggle('is-vip', !!best.vip);   // distinct marker for VIPs
         dot.textContent = '';
       }
+      // city name, revealed once zoomed past LABEL_ZOOM (see the .is-labelled rule)
+      var lbl = (clu.items.length > 1 || best._noHover) ? '' : (best.city || best.country || '');
+      if (label.textContent !== lbl) label.textContent = lbl;
       // grey out anyone outside the top 20 (VIPs always stay highlighted)
       el.classList.toggle('is-sub', !best._dot && best.rank > 20 && !best.vip);
       // highlight state (from list hover)
@@ -991,6 +996,25 @@
       } else {
         el.classList.remove('is-match', 'is-dim');
       }
+    }
+    layer.classList.toggle('is-labelled', this.zoom >= LABEL_ZOOM);
+    // Screen-space label de-collision. Clusters come best-first, so in a crowded
+    // area the best-ranked label wins and the others reappear as you zoom further.
+    // Width is estimated from the text (no offsetWidth: that would thrash layout).
+    var boxes = [];
+    for (var L = 0; L < pool.length; L++) {
+      var pl = pool[L];
+      if (pl.style.display === 'none') { pl.classList.remove('is-label-off'); continue; }
+      var txt = pl.lastChild.textContent;
+      if (!txt) { pl.classList.remove('is-label-off'); continue; }
+      var hw = (txt.length * 5.6 + 16) / 2, cx = +pl.dataset.sx, cy = +pl.dataset.sy + 18;
+      var bx = [cx - hw, cx + hw, cy - 8, cy + 8], hit = false;
+      for (var q2 = 0; q2 < boxes.length; q2++) {
+        var o = boxes[q2];
+        if (bx[0] < o[1] && bx[1] > o[0] && bx[2] < o[3] && bx[3] > o[2]) { hit = true; break; }
+      }
+      pl.classList.toggle('is-label-off', hit);
+      if (!hit) boxes.push(bx);
     }
     this._clusters = clusters;
 

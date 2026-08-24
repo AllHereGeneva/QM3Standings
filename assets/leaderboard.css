@@ -332,6 +332,52 @@
   box-shadow: 0 0 0 2px var(--ahl-accent-soft), 0 1px 3px rgba(0,0,0,.35);
 }
 
+/* hoverable markers breathe slowly, so they read as interactive */
+.ahl__pin.is-dot:not(.is-nohover)::after {
+  content: "";
+  position: absolute; left: 50%; top: 50%;
+  width: 9px; height: 9px;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  border: 1.5px solid var(--ahl-accent);
+  pointer-events: none;
+  animation: ahl-dot-pulse 3s ease-out infinite;
+}
+/* stagger by DOM slot so the map breathes organically instead of blinking in unison */
+.ahl__pin.is-dot:nth-child(3n+2)::after { animation-delay: 1s; }
+.ahl__pin.is-dot:nth-child(3n+3)::after { animation-delay: 2s; }
+@keyframes ahl-dot-pulse {
+  0%   { width: 9px;  height: 9px;  opacity: .5; }
+  70%  { opacity: 0; }
+  100% { width: 32px; height: 32px; opacity: 0; }
+}
+
+/* silent marker: on the map, but never reacts and never names itself */
+.ahl__pin.is-nohover { pointer-events: none; }
+
+/* city name, revealed only once zoomed in (empty for clusters and silent markers) */
+.ahl__pin-label {
+  position: absolute; left: 50%; top: 50%;
+  transform: translate(-50%, 12px);
+  padding: 2px 7px;
+  border-radius: 5px;
+  font-family: var(--ahl-font-display);
+  font-size: 10px; font-weight: 600; letter-spacing: .04em;
+  white-space: nowrap;
+  color: var(--ahl-text);
+  background: rgba(9, 17, 40, .74);
+  border: 1px solid var(--ahl-border);
+  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  opacity: 0;
+  transition: opacity .2s ease;
+  pointer-events: none;
+}
+.ahl__pins.is-labelled .ahl__pin-label { opacity: 1; }
+/* crowded area: hide the label that would overlap a better-ranked one */
+.ahl__pins.is-labelled .ahl__pin.is-label-off .ahl__pin-label { opacity: 0; }
+/* the top-3 star sits above the dot, so their label drops a little lower */
+.ahl__pin.is-top .ahl__pin-label { transform: translate(-50%, 15px); }
+
 /* bio-performer marker: a gold ring (distinct design; clusters like any pin) */
 .ahl__pin.is-vip .ahl__pin-dot {
   box-shadow: 0 0 0 2px var(--ahl-bg), 0 0 0 4px var(--ahl-accent), 0 2px 8px rgba(0,0,0,.55);
@@ -973,5 +1019,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .ahl__pin.is-active::after { animation: none; display: none; }
+  .ahl__pin.is-dot::after { animation: none; display: none; }
   .ahl__spinner { animation-duration: 2s; }
 }

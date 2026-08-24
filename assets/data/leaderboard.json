@@ -118,7 +118,8 @@
       "country": "United States",
       "dot": true,
       "lat": 38.5816,
-      "lon": -121.4944
+      "lon": -121.4944,
+      "noHover": true
     },
     {
       "city": "Chennai",

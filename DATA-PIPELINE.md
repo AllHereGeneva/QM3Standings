@@ -94,9 +94,11 @@ Trois types d'entrées :
 |---|---|---|
 | **Classée** | `city`, `country`, `cmi`, `lat`, `lon` | Point + rang + score, listée |
 | **Mise en avant** (VIP) | idem + `vip: {name, photo, tag?, bio?}` | Fiche au survol avec photo et bio |
-| **Marqueur** | `city`, `country`, `dot: true`, `lat`, `lon` | Point jaune, survol = nom de ville seulement |
+| **Marqueur** | `city`, `country`, `dot: true`, `lat`, `lon` | Point jaune qui pulse, survol = nom de ville seulement |
+| **Marqueur silencieux** | idem + `noHover: true` | Point jaune fixe : ne pulse pas, ne réagit pas, ne s'affiche jamais en libellé |
 
 - `lat`/`lon` sont **obligatoires** — le géocodage par nom n'est plus utilisé.
+- `noHover: true` sert à poser une présence discrète sur la carte, sans rien révéler.
 - `tag` et `bio` sont **optionnels** (Tokyo n'a pas de `tag`, c'est normal).
 - `vip.photo` doit être une **URL absolue** — le document est aussi lu par d'autres clients
   (app mobile, outils internes) pour qui un chemin relatif ne veut rien dire.
@@ -146,7 +148,19 @@ photos cesseraient de répondre.
 
 ---
 
-## 6. Pièges connus
+## 6. Affichage des noms de villes
+
+À partir du niveau de zoom `LABEL_ZOOM` (5, défini en tête de `assets/leaderboard.js`), chaque
+pin affiche son nom de ville sous le point — le pays sert de repli si `city` est vide.
+
+En zone dense, les libellés se chevaucheraient. Un anti-collision en espace écran ne garde que
+le mieux classé quand deux libellés se recouvrent ; les autres réapparaissent au fur et à mesure
+qu'on zoome et qu'ils se séparent. Les regroupements (bulles de comptage) et les marqueurs
+silencieux n'affichent jamais de libellé.
+
+---
+
+## 7. Pièges connus
 
 - **Photos et `?v=` peuvent désynchroniser.** Le lien vit en base, l'image dans le dépôt.
   Si on remplace une photo sans republier le document, l'ancien `?v=` reste et le cache
@@ -165,7 +179,7 @@ photos cesseraient de répondre.
 
 ---
 
-## 7. Fichiers
+## 8. Fichiers
 
 | Chemin | Suivi ? | Rôle |
 |---|---|---|
