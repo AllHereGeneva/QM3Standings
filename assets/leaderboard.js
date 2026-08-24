@@ -960,7 +960,11 @@
       var onScreen = clu.x >= -m && clu.x <= this.cw + m && clu.y >= -m && clu.y <= this.ch + m;
       el.style.display = onScreen ? '' : 'none';
       if (!onScreen) continue;
-      el.style.transform = 'translate(' + clu.x + 'px,' + clu.y + 'px)';
+      // The trailing -50% restores the centering from the stylesheet: setting an
+      // inline transform replaces that rule outright, which was parking every pin
+      // half its own size down-right of its coordinate (4.5px for a marker, 8px for
+      // a top-3) — so differently sized pins drifted apart from each other.
+      el.style.transform = 'translate(' + clu.x + 'px,' + clu.y + 'px) translate(-50%,-50%)';
       el.dataset.sx = clu.x; el.dataset.sy = clu.y;
       el.dataset.count = clu.items.length;
       el.dataset.ids = clu.items.map(function (e) { return e.id; }).join(',');

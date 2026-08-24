@@ -358,6 +358,12 @@
    for attention. Nothing but the dot's own scale — no ring, no halo. */
 .ahl__pin.is-dot:not(.is-nohover) .ahl__pin-dot {
   animation: ahl-dot-breathe 4.5s ease-in-out infinite;
+  /* The base dot carries `transition: transform` (for hover) and a drop shadow offset
+     1px downwards. Under a scale animation the transition fights each frame, and the
+     offset shadow grows downwards only — which reads as the dot stretching vertically
+     rather than breathing evenly. Neither belongs on an animated marker. */
+  transition: none;
+  box-shadow: 0 0 0 2px var(--ahl-accent-soft);
 }
 @keyframes ahl-dot-breathe {
   0%, 100% { transform: scale(1); }
@@ -369,7 +375,10 @@
 .ahl__pin.is-dot:hover .ahl__pin-dot,
 .ahl__pin.is-dot.is-active .ahl__pin-dot,
 .ahl__pin.is-dot.is-match .ahl__pin-dot,
-.ahl__pin.is-dot.is-dim .ahl__pin-dot { animation: none; }
+.ahl__pin.is-dot.is-dim .ahl__pin-dot {
+  animation: none;
+  transition: transform .15s ease, box-shadow .15s ease;   /* eased again once the loop stops */
+}
 
 /* silent marker: on the map, but never reacts and never names itself */
 .ahl__pin.is-nohover { pointer-events: none; }
