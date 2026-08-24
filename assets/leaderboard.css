@@ -332,56 +332,44 @@
   box-shadow: 0 0 0 2px var(--ahl-accent-soft), 0 1px 3px rgba(0,0,0,.35);
 }
 
-/* Two tiers of motion.
-   Ranked participants ripple: concentric rings from one pseudo-element (box-shadow
-   spread), so it stays clear even where the ::before slot is taken by the top-3 star.
-   Plain markers get a slow, quiet breath instead — present, never competing. */
+/* Two tiers of motion, both quiet.
+   Ranked participants: a single hairline ring that widens and fades — a thread, not
+   a glow. Centering uses margins, not translate, so `transform` stays free... except
+   we widen the box instead of scaling it, which keeps the stroke 1px at every size
+   (a scaled ring thickens as it grows). ~9 pins, so the layout cost is negligible. */
 .ahl__pin:not(.is-dot):not(.is-cluster)::after {
   content: "";
   position: absolute; left: 50%; top: 50%;
   width: 14px; height: 14px;
-  transform: translate(-50%, -50%);
+  margin: -7px 0 0 -7px;
   border-radius: 50%;
+  border: 1px solid var(--ahl-accent);
   pointer-events: none;
-  animation: ahl-ripple 3.2s ease-out infinite;
+  animation: ahl-ripple 3.6s ease-out infinite;
 }
 @keyframes ahl-ripple {
-  0%   { box-shadow: 0 0 0 0 rgba(244,180,0,.45), 0 0 0 0 rgba(244,180,0,.28); }
-  100% { box-shadow: 0 0 0 17px rgba(244,180,0,0), 0 0 0 32px rgba(244,180,0,0); }
+  0%   { width: 14px; height: 14px; margin: -7px 0 0 -7px;   opacity: .55; }
+  100% { width: 48px; height: 48px; margin: -24px 0 0 -24px; opacity: 0; }
 }
-/* stagger so the podium doesn't ripple in lockstep */
-.ahl__pin:not(.is-dot):not(.is-cluster):nth-child(3n+2)::after { animation-delay: 1.05s; }
-.ahl__pin:not(.is-dot):not(.is-cluster):nth-child(3n+3)::after { animation-delay: 2.1s; }
+.ahl__pin:not(.is-dot):not(.is-cluster):nth-child(3n+2)::after { animation-delay: 1.2s; }
+.ahl__pin:not(.is-dot):not(.is-cluster):nth-child(3n+3)::after { animation-delay: 2.4s; }
 
-/* score-less markers: slow and discreet */
-.ahl__pin.is-dot:not(.is-nohover)::after {
-  content: "";
-  position: absolute; left: 50%; top: 50%;
-  width: 9px; height: 9px;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  border: 1.5px solid var(--ahl-accent);
-  pointer-events: none;
-  animation: ahl-dot-pulse 5s ease-out infinite;
-}
+/* score-less markers: just a slow breath, so the place feels alive without asking
+   for attention. Nothing but the dot's own scale — no ring, no halo. */
 .ahl__pin.is-dot:not(.is-nohover) .ahl__pin-dot {
-  animation: ahl-dot-breathe 5s ease-in-out infinite;
-}
-/* hovering takes over: stop the loop so the hover state reads cleanly */
-.ahl__pin.is-dot:hover .ahl__pin-dot { animation: none; }
-.ahl__pin.is-dot:nth-child(3n+2)::after,
-.ahl__pin.is-dot:nth-child(3n+2) .ahl__pin-dot { animation-delay: 1.7s; }
-.ahl__pin.is-dot:nth-child(3n+3)::after,
-.ahl__pin.is-dot:nth-child(3n+3) .ahl__pin-dot { animation-delay: 3.4s; }
-@keyframes ahl-dot-pulse {
-  0%   { width: 9px;  height: 9px;  opacity: .6; }
-  60%  { opacity: .18; }
-  100% { width: 26px; height: 26px; opacity: 0; }
+  animation: ahl-dot-breathe 4.5s ease-in-out infinite;
 }
 @keyframes ahl-dot-breathe {
-  0%, 100% { box-shadow: 0 0 0 2px var(--ahl-accent-soft), 0 1px 3px rgba(0,0,0,.35); }
-  50%      { box-shadow: 0 0 0 4px var(--ahl-accent-soft), 0 1px 3px rgba(0,0,0,.35); }
+  0%, 100% { transform: scale(1); }
+  50%      { transform: scale(1.35); }
 }
+.ahl__pin.is-dot:nth-child(3n+2) .ahl__pin-dot { animation-delay: 1.5s; }
+.ahl__pin.is-dot:nth-child(3n+3) .ahl__pin-dot { animation-delay: 3s; }
+/* any state that sets its own transform wins: stop the loop so it isn't overridden */
+.ahl__pin.is-dot:hover .ahl__pin-dot,
+.ahl__pin.is-dot.is-active .ahl__pin-dot,
+.ahl__pin.is-dot.is-match .ahl__pin-dot,
+.ahl__pin.is-dot.is-dim .ahl__pin-dot { animation: none; }
 
 /* silent marker: on the map, but never reacts and never names itself */
 .ahl__pin.is-nohover { pointer-events: none; }
@@ -1050,7 +1038,6 @@
 
 @media (prefers-reduced-motion: reduce) {
   .ahl__pin.is-active::after { animation: none; display: none; }
-  .ahl__pin.is-dot::after { animation: none; display: none; }
   .ahl__pin.is-dot .ahl__pin-dot { animation: none; }
   .ahl__pin:not(.is-dot):not(.is-cluster)::after { animation: none; display: none; }
   .ahl__spinner { animation-duration: 2s; }
