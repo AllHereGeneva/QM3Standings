@@ -43,32 +43,39 @@ Modifier la base suffit : **aucun commit, aucun redéploiement**.
 
 ## 3. Mettre à jour le classement
 
+Une seule commande fait tout, dans le bon ordre :
+
 ```bash
-# 1. éditer le document
-$EDITOR assets/data/leaderboard.json
-
-# 2. vérifier sans rien envoyer
-python3 build/push-standings.py --dry-run
-
-# 3. publier vers la base (+ contrôle automatique)
-python3 build/push-standings.py
-
-# 4. incrémenter ?v= dans index.html, puis committer le repli
-git add assets/data/leaderboard.json index.html && git commit && git push
+$EDITOR assets/data/leaderboard.json          # 1. éditer
+python3 build/release.py --dry-run            # 2. voir ce qui changerait
+python3 build/release.py -m "message"         # 3. tout publier
 ```
 
-**Ordre important : la base d'abord, le commit ensuite.** Le fichier local est le repli —
-il ne doit jamais être plus vieux que la source. Dans ce sens, une interruption en cours
-de route laisse toujours un état cohérent.
+`release.py` enchaîne : comparaison base/local champ par champ → confirmation →
+**publication en base** → bump des `?v=` → commit → push → vérification finale.
+Options : `--dry-run` (ne touche à rien, ne lit même pas le token), `--yes` (sans
+confirmation, pour un usage scripté).
 
-Le script refuse de publier un JSON invalide ou une liste d'entrées vide, puis relit la
-base et compare champ par champ avec le local. Il sort en code 0 seulement si les deux
-sont identiques.
+**Pourquoi la base d'abord ?** Le fichier commité n'est que le repli. Il ne doit jamais
+être plus récent que la source, sinon le site sert d'anciennes données sans le dire.
+Dans cet ordre, une interruption en cours de route laisse au pire un repli plus vieux
+que la base — jamais l'inverse. Le script s'arrête sans rien commiter si la publication
+échoue.
 
-⚠️ **L'écriture remplace le document en entier** (pas de fusion). On envoie toujours le
-document complet — c'est la seule opération destructive de la chaîne.
+L'étape de comparaison est le garde-fou : elle montre **tout** ce qui diverge, pas
+seulement ta modification en cours. Si un écart inattendu apparaît, c'est qu'une
+publication précédente a été oubliée.
 
----
+### Publier en base uniquement
+
+```bash
+python3 build/push-standings.py --dry-run     # valider sans envoyer
+python3 build/push-standings.py               # publier seulement
+```
+
+Le script refuse un JSON invalide, une liste d'entrées vide, ou un fichier token
+lisible par d'autres. L'écriture **remplace le document en entier** (pas de fusion) :
+c'est la seule opération destructive de la chaîne.
 
 ## 4. Format du document
 
