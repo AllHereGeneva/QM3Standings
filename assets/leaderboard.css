@@ -332,24 +332,36 @@
   box-shadow: 0 0 0 2px var(--ahl-accent-soft), 0 1px 3px rgba(0,0,0,.35);
 }
 
-/* hoverable markers breathe slowly, so they read as interactive */
+/* hoverable markers pulse so they read as interactive: an expanding ring plus a
+   breathing halo on the dot itself — the ring alone was too faint to notice. */
 .ahl__pin.is-dot:not(.is-nohover)::after {
   content: "";
   position: absolute; left: 50%; top: 50%;
   width: 9px; height: 9px;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  border: 1.5px solid var(--ahl-accent);
+  border: 2px solid var(--ahl-accent);
   pointer-events: none;
-  animation: ahl-dot-pulse 3s ease-out infinite;
+  animation: ahl-dot-pulse 2.4s ease-out infinite;
 }
+.ahl__pin.is-dot:not(.is-nohover) .ahl__pin-dot {
+  animation: ahl-dot-breathe 2.4s ease-in-out infinite;
+}
+/* hovering takes over: stop the loop so the hover state reads cleanly */
+.ahl__pin.is-dot:hover .ahl__pin-dot { animation: none; }
 /* stagger by DOM slot so the map breathes organically instead of blinking in unison */
-.ahl__pin.is-dot:nth-child(3n+2)::after { animation-delay: 1s; }
-.ahl__pin.is-dot:nth-child(3n+3)::after { animation-delay: 2s; }
+.ahl__pin.is-dot:nth-child(3n+2)::after,
+.ahl__pin.is-dot:nth-child(3n+2) .ahl__pin-dot { animation-delay: .8s; }
+.ahl__pin.is-dot:nth-child(3n+3)::after,
+.ahl__pin.is-dot:nth-child(3n+3) .ahl__pin-dot { animation-delay: 1.6s; }
 @keyframes ahl-dot-pulse {
-  0%   { width: 9px;  height: 9px;  opacity: .5; }
-  70%  { opacity: 0; }
-  100% { width: 32px; height: 32px; opacity: 0; }
+  0%   { width: 9px;  height: 9px;  opacity: .95; border-width: 2px; }
+  55%  { opacity: .4; }
+  100% { width: 38px; height: 38px; opacity: 0; border-width: 1px; }
+}
+@keyframes ahl-dot-breathe {
+  0%, 100% { box-shadow: 0 0 0 2px var(--ahl-accent-soft), 0 1px 3px rgba(0,0,0,.35); }
+  50%      { box-shadow: 0 0 0 6px var(--ahl-accent-soft), 0 0 12px 3px rgba(244,180,0,.55), 0 1px 3px rgba(0,0,0,.35); }
 }
 
 /* silent marker: on the map, but never reacts and never names itself */
@@ -1020,5 +1032,6 @@
 @media (prefers-reduced-motion: reduce) {
   .ahl__pin.is-active::after { animation: none; display: none; }
   .ahl__pin.is-dot::after { animation: none; display: none; }
+  .ahl__pin.is-dot .ahl__pin-dot { animation: none; }
   .ahl__spinner { animation-duration: 2s; }
 }
