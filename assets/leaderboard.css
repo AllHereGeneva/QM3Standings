@@ -333,23 +333,27 @@
 }
 
 /* Two tiers of motion, both quiet.
-   Ranked participants: a single hairline ring that widens and fades — a thread, not
-   a glow. Centering uses margins, not translate, so `transform` stays free... except
-   we widen the box instead of scaling it, which keeps the stroke 1px at every size
-   (a scaled ring thickens as it grows). ~9 pins, so the layout cost is negligible. */
+   Ranked participants: a single hairline ring travelling outwards.
+   Only `transform` and `opacity` animate, so the whole thing composites on the GPU —
+   widening the box instead would relayout every frame. The stroke still reads as a
+   thread because the ring is authored large (24px) and scaled UP FROM 0.5: the border
+   is sub-pixel early on and only reaches ~2px at the end, where it has faded out.
+   Timing is linear, not ease-out: eased, the ring shot outwards then crawled almost
+   invisibly for two thirds of the cycle, which read as stutter rather than motion. */
 .ahl__pin:not(.is-dot):not(.is-cluster)::after {
   content: "";
   position: absolute; left: 50%; top: 50%;
-  width: 14px; height: 14px;
-  margin: -7px 0 0 -7px;
+  width: 24px; height: 24px;
+  margin: -12px 0 0 -12px;
   border-radius: 50%;
   border: 1px solid var(--ahl-accent);
   pointer-events: none;
-  animation: ahl-ripple 3.6s ease-out infinite;
+  animation: ahl-ripple 3.2s linear infinite;
 }
 @keyframes ahl-ripple {
-  0%   { width: 14px; height: 14px; margin: -7px 0 0 -7px;   opacity: .55; }
-  100% { width: 48px; height: 48px; margin: -24px 0 0 -24px; opacity: 0; }
+  0%   { transform: scale(.5);  opacity: 0; }
+  18%  { opacity: .5; }
+  100% { transform: scale(1.9); opacity: 0; }
 }
 .ahl__pin:not(.is-dot):not(.is-cluster):nth-child(3n+2)::after { animation-delay: 1.2s; }
 .ahl__pin:not(.is-dot):not(.is-cluster):nth-child(3n+3)::after { animation-delay: 2.4s; }
@@ -458,16 +462,15 @@
 .ahl__pin.is-active:not(.is-dot):not(.is-cluster)::after {
   content: "";
   position: absolute; left: 50%; top: 50%;
-  width: 14px; height: 14px;
-  margin: -7px 0 0 -7px;
-  transform: none;
+  width: 24px; height: 24px;
+  margin: -12px 0 0 -12px;
   border-radius: 50%;
-  border: 2px solid var(--ahl-accent);
+  border: 1.5px solid var(--ahl-accent);
   animation: ahl-pulse 1.1s ease-out infinite;
 }
 @keyframes ahl-pulse {
-  0%   { width: 14px; height: 14px; margin: -7px 0 0 -7px;   opacity: .8; }
-  100% { width: 54px; height: 54px; margin: -27px 0 0 -27px; opacity: 0; }
+  0%   { transform: scale(.55); opacity: .85; }
+  100% { transform: scale(2.2); opacity: 0; }
 }
 
 /* Markers never carry a ring — in any state. Their only motion is the breath. */
