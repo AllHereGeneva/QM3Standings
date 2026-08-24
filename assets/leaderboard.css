@@ -441,20 +441,28 @@
 .ahl__pin.is-dim { opacity: 0.26; }
 .ahl__pin.is-dim .ahl__pin-dot { transform: scale(0.85); }
 
-/* pulse ring for highlighted pin */
-.ahl__pin.is-active::after {
+/* Pulse ring for the highlighted pin. The second selector only exists to outrank
+   the ripple rule (3 classes) — without it the highlight inherited ahl-ripple and
+   stacked its own translate on the ripple's margin, throwing the ring ~27px off
+   its pin. Same margin-based centering as the ripple, so nothing can drift again. */
+.ahl__pin.is-active::after,
+.ahl__pin.is-active:not(.is-dot):not(.is-cluster)::after {
   content: "";
   position: absolute; left: 50%; top: 50%;
   width: 14px; height: 14px;
-  transform: translate(-50%, -50%);
+  margin: -7px 0 0 -7px;
+  transform: none;
   border-radius: 50%;
   border: 2px solid var(--ahl-accent);
   animation: ahl-pulse 1.1s ease-out infinite;
 }
 @keyframes ahl-pulse {
-  0% { width: 14px; height: 14px; opacity: .8; }
-  100% { width: 54px; height: 54px; opacity: 0; }
+  0%   { width: 14px; height: 14px; margin: -7px 0 0 -7px;   opacity: .8; }
+  100% { width: 54px; height: 54px; margin: -27px 0 0 -27px; opacity: 0; }
 }
+
+/* Markers never carry a ring — in any state. Their only motion is the breath. */
+.ahl__pin.is-dot::after { content: none; }
 
 /* map controls (bottom-left, clear of the floating panel) */
 .ahl__mapctrl {
