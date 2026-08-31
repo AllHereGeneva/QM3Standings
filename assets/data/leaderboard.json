@@ -178,11 +178,11 @@
       "lon": 26.1025
     },
     {
-      "city": "",
-      "country": "Brazil",
+      "city": "Geneva",
+      "country": "Switzerland",
       "dot": true,
-      "lat": -15.7939,
-      "lon": -47.8828
+      "lat": 46.2044,
+      "lon": 6.1432
     }
   ]
 }
