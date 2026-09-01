@@ -119,9 +119,39 @@
 .ahl__nav-cta:hover { background: transparent; color: var(--ahl-accent); }
 
 /* hero block (centered brand copy under the nav) */
+.ahl__head { position: relative; overflow: hidden; }
+
+/* B. A slow, diffuse gold breath behind the title — depth without a second object. */
 .ahl__hero {
   text-align: center;
-  padding: 12px 24px 14px;
+  padding: 26px 24px 30px;
+  position: relative;
+  z-index: 1;                /* stacking context: keeps the ::before glow inside the hero */
+}
+.ahl__hero::before {
+  content: "";
+  position: absolute;
+  left: 50%; top: 46%;
+  width: min(760px, 88%); height: 300px;
+  transform: translate(-50%, -50%);
+  z-index: -1;
+  pointer-events: none;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(244, 180, 0, 0.12), rgba(244, 180, 0, 0.035) 55%, transparent 78%);
+  filter: blur(30px);
+  animation: ahl-glow 9s ease-in-out infinite;
+}
+@keyframes ahl-glow {
+  0%, 100% { opacity: .62; transform: translate(-50%, -50%) scale(1); }
+  50%      { opacity: 1;   transform: translate(-50%, -50%) scale(1.09); }
+}
+/* C. a hairline above the eyebrow, and stats with room to breathe */
+.ahl__eyebrow::before {
+  content: "";
+  display: block;
+  width: 46px; height: 1px;
+  margin: 0 auto 16px;
+  background: linear-gradient(90deg, transparent, var(--ahl-accent), transparent);
 }
 .ahl__eyebrow {
   display: inline-block;
@@ -145,6 +175,13 @@
   font-size: clamp(1.55rem, 3vw, 2.25rem);
   line-height: 1.08;
   margin: 0 0 8px;
+  background: linear-gradient(178deg, #ffffff 42%, #ffeab0 72%, var(--ahl-accent) 100%);
+  -webkit-background-clip: text; background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+}
+@supports not ((background-clip: text) or (-webkit-background-clip: text)) {
+  .ahl__title { color: var(--ahl-text); -webkit-text-fill-color: currentColor; }
 }
 .ahl__subtitle {
   color: var(--ahl-text-muted);
@@ -198,8 +235,8 @@
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: 30px;                 /* room for the dot separators */
-  margin-top: 8px;
+  gap: 44px;                 /* room for the dot separators */
+  margin-top: 20px;
 }
 /* no boxes — just the numbers, with a small white dot between sections */
 .ahl__stat {
@@ -210,7 +247,7 @@
 .ahl__stat + .ahl__stat::before {
   content: "";
   position: absolute;
-  left: -17px; top: 50%;
+  left: -24px; top: 50%;
   width: 5px; height: 5px;
   border-radius: 50%;
   background: rgba(255, 255, 255, 0.55);
@@ -218,7 +255,7 @@
 }
 .ahl__stat-num {
   font-family: var(--ahl-font-display);
-  font-size: 1.7rem;
+  font-size: 2.05rem;
   font-weight: 700;
   font-stretch: expanded;
   font-variation-settings: 'wdth' 118;
@@ -269,7 +306,26 @@
 .ahl__map canvas, .ahl__map img { -webkit-user-drag: none; user-drag: none; }  /* no native ghost-drag on pan */
 
 /* pins overlay */
-.ahl__pins { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+/* Vignette: sits above the canvas, below the pins, so it deepens the map without
+   ever dimming a marker. Purely decorative — never intercepts a pointer. */
+.ahl__map::after {
+  content: "";
+  position: absolute; inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    radial-gradient(125% 95% at 50% 45%, transparent 42%, rgba(5, 15, 35, 0.30) 74%, rgba(5, 15, 35, 0.62) 100%),
+    linear-gradient(to bottom, rgba(5, 15, 35, 0.38) 0%, transparent 16%, transparent 84%, rgba(5, 15, 35, 0.45) 100%);
+}
+.ahl__pins { position: absolute; inset: 0; pointer-events: none; overflow: hidden; z-index: 2; }
+
+/* One-shot entrance: pins arrive in a short cascade on the first paint. */
+.ahl__pins.is-entering .ahl__pin { animation: ahl-pin-in .5s ease-out backwards; }
+.ahl__pins.is-entering .ahl__pin:nth-child(4n+1) { animation-delay: .05s; }
+.ahl__pins.is-entering .ahl__pin:nth-child(4n+2) { animation-delay: .17s; }
+.ahl__pins.is-entering .ahl__pin:nth-child(4n+3) { animation-delay: .29s; }
+.ahl__pins.is-entering .ahl__pin:nth-child(4n+4) { animation-delay: .41s; }
+@keyframes ahl-pin-in { from { opacity: 0; } to { opacity: 1; } }
 .ahl__pin {
   position: absolute;
   top: 0; left: 0;
@@ -348,15 +404,16 @@
   border-radius: 50%;
   border: 1px solid var(--ahl-accent);
   pointer-events: none;
-  animation: ahl-ripple 3.2s linear infinite;
+  animation: ahl-ripple 5.6s linear infinite;
 }
 @keyframes ahl-ripple {
   0%   { transform: scale(.5);  opacity: 0; }
   18%  { opacity: .5; }
   100% { transform: scale(1.9); opacity: 0; }
 }
-.ahl__pin:not(.is-dot):not(.is-cluster):nth-child(3n+2)::after { animation-delay: 1.2s; }
-.ahl__pin:not(.is-dot):not(.is-cluster):nth-child(3n+3)::after { animation-delay: 2.4s; }
+.ahl__pin:not(.is-dot):not(.is-cluster):nth-child(4n+2)::after { animation-delay: 1.4s; }
+.ahl__pin:not(.is-dot):not(.is-cluster):nth-child(4n+3)::after { animation-delay: 2.8s; }
+.ahl__pin:not(.is-dot):not(.is-cluster):nth-child(4n+4)::after { animation-delay: 4.2s; }
 
 /* score-less markers: just a slow breath, so the place feels alive without asking
    for attention. Nothing but the dot's own scale — no ring, no halo. */
@@ -390,21 +447,19 @@
 /* city name, revealed only once zoomed in (empty for clusters and silent markers) */
 .ahl__pin-label {
   position: absolute; left: 50%; top: 50%;
-  transform: translate(-50%, 12px);
-  padding: 2px 7px;
-  border-radius: 5px;
+  transform: translate(-50%, 11px);
   font-family: var(--ahl-font-display);
-  font-size: 10px; font-weight: 600; letter-spacing: .04em;
+  font-size: 10.5px; font-weight: 600; letter-spacing: .05em;
   white-space: nowrap;
-  color: var(--ahl-text);
-  background: rgba(9, 17, 40, .74);
-  border: 1px solid var(--ahl-border);
-  backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px);
+  color: rgba(255, 255, 255, .92);
+  text-shadow: 0 1px 3px rgba(5, 15, 35, .95), 0 0 8px rgba(5, 15, 35, .8);
   opacity: 0;
   transition: opacity .2s ease;
   pointer-events: none;
 }
 .ahl__pins.is-labelled .ahl__pin-label { opacity: 1; }
+/* silent markers carry an empty label — render nothing at all, not an empty chip */
+.ahl__pin-label:empty { display: none; }
 /* crowded area: hide the label that would overlap a better-ranked one */
 .ahl__pins.is-labelled .ahl__pin.is-label-off .ahl__pin-label { opacity: 0; }
 /* the top-3 star sits above the dot, so their label drops a little lower */
@@ -657,6 +712,12 @@
 .ahl__seltxt { font-size: 11.5px; color: var(--ahl-text-dim); letter-spacing: .04em; }
 
 /* scrollable rows region — height is synced to the map in JS on desktop */
+/* lift the panel off the map: deeper glass, a top highlight, a real shadow */
+.ahl__listcard {
+  backdrop-filter: blur(22px) saturate(1.25);
+  -webkit-backdrop-filter: blur(22px) saturate(1.25);
+  box-shadow: 0 18px 50px -12px rgba(0, 0, 0, 0.62), inset 0 1px 0 0 rgba(255, 255, 255, 0.13);
+}
 .ahl__rows {
   flex: 1 1 auto;
   min-height: 0;
@@ -681,6 +742,12 @@
   border: 1px solid transparent;
   cursor: pointer;
   transition: background .16s ease, border-color .16s ease, opacity .16s ease;
+  animation: ahl-row-in .45s ease-out backwards;
+  animation-delay: calc(var(--ahl-i, 0) * 55ms);
+}
+@keyframes ahl-row-in {
+  from { opacity: 0; transform: translateY(7px); }
+  to   { opacity: 1; transform: none; }
 }
 .ahl__row + .ahl__row { margin-top: 2px; }
 .ahl__row:hover, .ahl__row.is-active {
@@ -1060,5 +1127,7 @@
   .ahl__pin.is-active::after { animation: none; display: none; }
   .ahl__pin.is-dot .ahl__pin-dot { animation: none; }
   .ahl__pin:not(.is-dot):not(.is-cluster)::after { animation: none; display: none; }
+  .ahl__row { animation: none; }
+  .ahl__pins.is-entering .ahl__pin { animation: none; }
   .ahl__spinner { animation-duration: 2s; }
 }

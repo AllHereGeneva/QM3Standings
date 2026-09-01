@@ -16,14 +16,16 @@
       "country": "United States",
       "cmi": 385.2,
       "lat": 37.7749,
-      "lon": -122.4194
+      "lon": -122.4194,
+      "ref": "SF_07"
     },
     {
       "city": "Tokyo",
       "country": "Japan",
       "cmi": 364.8,
       "lat": 35.6895,
-      "lon": 139.6917
+      "lon": 139.6917,
+      "ref": "JT_36"
     },
     {
       "city": "Sheffield",
@@ -43,7 +45,8 @@
       "country": "Australia",
       "cmi": 225,
       "lat": -33.8688,
-      "lon": 151.2093
+      "lon": 151.2093,
+      "ref": "SY"
     },
     {
       "city": "Tokyo",
@@ -58,39 +61,44 @@
       }
     },
     {
-      "city": "Sera Jey",
+      "city": "Bylakuppe",
       "country": "India",
       "cmi": 283.0,
       "lat": 12.4239,
-      "lon": 75.9739
+      "lon": 75.9739,
+      "ref": "BY_01"
     },
     {
       "city": "Bengaluru",
       "country": "India",
       "cmi": 262.6,
       "lat": 12.9716,
-      "lon": 77.5946
+      "lon": 77.5946,
+      "ref": "BG_18"
     },
     {
       "city": "Tokyo",
       "country": "Japan",
       "cmi": 259.9,
       "lat": 35.6895,
-      "lon": 139.6917
+      "lon": 139.6917,
+      "ref": "JT_41"
     },
     {
       "city": "Oxford",
       "country": "United Kingdom",
       "cmi": 259.5,
       "lat": 51.752,
-      "lon": -1.2577
+      "lon": -1.2577,
+      "ref": "OX_07"
     },
     {
       "city": "Bengaluru",
       "country": "India",
       "cmi": 257.9,
       "lat": 12.9716,
-      "lon": 77.5946
+      "lon": 77.5946,
+      "ref": "BG_06"
     },
     {
       "city": "Dubai",
@@ -164,7 +172,7 @@
       "lon": 13.405
     },
     {
-      "city": "",
+      "city": "Paris",
       "country": "France",
       "dot": true,
       "lat": 48.8566,
@@ -183,6 +191,27 @@
       "dot": true,
       "lat": 46.2044,
       "lon": 6.1432
+    },
+    {
+      "city": "",
+      "country": "Italy",
+      "dot": true,
+      "lat": 41.9028,
+      "lon": 12.4964
+    },
+    {
+      "city": "",
+      "country": "Thailand",
+      "dot": true,
+      "lat": 13.7563,
+      "lon": 100.5018
+    },
+    {
+      "city": "Basel",
+      "country": "Switzerland",
+      "dot": true,
+      "lat": 47.5596,
+      "lon": 7.5886
     }
   ]
 }

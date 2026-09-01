@@ -5,21 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>World Meditation Challenge — World Meditation League</title>
   <meta name="description" content="World Meditation League — the global Quantified Meditation standings ranked by CMI (Concentration & Mindfulness Index)." />
-  <link rel="stylesheet" href="assets/leaderboard.css?v=e58a3797" />
+  <link rel="stylesheet" href="assets/leaderboard.css?v=c89e6426" />
   <style>html,body{margin:0;padding:0;background:#050f23;}</style>
 </head>
 <body>
   <!-- Drop this single element into any page. Everything renders inside it. -->
   <section class="ahl" id="cmi-leaderboard"></section>
 
-  <script src="assets/leaderboard.js?v=e58a3797"></script>
+  <script src="assets/leaderboard.js?v=c89e6426"></script>
   <script>
     window.__ahl = AHLeaderboard.init(document.getElementById('cmi-leaderboard'), {
       // Standings read from the EEG/neuro API endpoint ({eegApiBase}/eeg/standings/qm3),
       // with fallback to the bundled dataUrl below if it's unreachable/not yet live.
       // Split-ready: switch eegApiBase to https://neuro.allherelounge.com later — nothing else changes.
       eegApiBase: 'https://api.allherelounge.com',
-      dataUrl: 'assets/data/leaderboard.json?v=73',
+      dataUrl: 'assets/data/leaderboard.json?v=74',
       landUrl: 'assets/data/world-land.json?v=21',
       gazetteerUrl: 'assets/data/gazetteer.json',
       listTop: 10

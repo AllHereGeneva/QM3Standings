@@ -99,6 +99,12 @@
       return fetch(self.opt.dataUrl, { cache: 'no-store' }).then(function (r) { return r.json(); });
     };
     var base = this.opt.eegApiBase;
+    // ?local=1 forces the bundled file: lets you see edits to leaderboard.json before
+    // they are published to the base, which is otherwise always what the page shows.
+    if (/[?&]local=1\b/.test(location.search)) {
+      console.info('[AHLeaderboard] ?local=1 — reading the bundled file, not the base.');
+      return local();
+    }
     if (!base) return local();
     var url = String(base).replace(/\/+$/, '') + '/eeg/standings/qm3';
     var ctl = (typeof AbortController !== 'undefined') ? new AbortController() : null;
@@ -344,6 +350,43 @@
     }
   };
 
+  // Count a headline figure up to its final value. Keeps any prefix/suffix ("400+"),
+  // and is a no-op when the number can't be parsed or motion is unwelcome.
+  function countUp(el, reduce) {
+    var raw = el.textContent;
+    var m = raw.match(/^(\D*)([\d\s.,]+)(.*)$/);
+    if (!m) return;
+    var target = parseFloat(m[2].replace(/[\s,]/g, ''));
+    if (!isFinite(target) || target <= 0) return;
+    if (reduce) return;
+    var pre = m[1], post = m[3], dur = 1100, t0 = null;
+    var paint = function (ts) {
+      if (t0 === null) t0 = ts;
+      var k = Math.min(1, (ts - t0) / dur);
+      var eased = 1 - Math.pow(1 - k, 3);
+      el.textContent = pre + fmtInt(Math.round(target * eased)) + post;
+      if (k < 1) requestAnimationFrame(paint);
+    };
+    el.textContent = pre + '0' + post;
+    requestAnimationFrame(paint);
+  }
+
+  AHLeaderboard.prototype.animateStats = function () {
+    if (this._statsDone || !this.el.stats) return;
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var nums = this.el.stats.querySelectorAll('.ahl__stat-num');
+    if (!nums.length) return;
+    var run = function () {
+      Array.prototype.forEach.call(nums, function (n) { countUp(n, reduce); });
+    };
+    this._statsDone = true;
+    if (typeof IntersectionObserver === 'undefined') return run();
+    var io = new IntersectionObserver(function (ents) {
+      ents.forEach(function (en) { if (en.isIntersecting) { run(); io.disconnect(); } });
+    }, { threshold: 0.4 });
+    io.observe(this.el.stats);
+  };
+
   AHLeaderboard.prototype.populateHeader = function (meta) {
     // The hero title is deliberately NOT taken from meta.title. It's the name of the
     // event, not a property of a scores feed — and the feed (the API's
@@ -378,6 +421,7 @@
         '<span>' + esc(count) + ' meditators worldwide</span>' +
       '</div>';
     this.el.footer.innerHTML = footHtml;                        // in-panel standings footer
+    this.animateStats();
   };
 
   // ---- ranked list ----
@@ -418,11 +462,12 @@
         this.el.selbar.innerHTML = '';
       }
     }
-    this.el.rows.innerHTML = top.map(function (e) {
+    this.el.rows.innerHTML = top.map(function (e, i) {
       var rankCls = e.rank <= 3 ? ' rank-' + e.rank : '';
       var who = e.vip ? e.vip.name : (e.dbg || 'Participant ' + e.rank);   // e.dbg = TEMP debug filename
       var stateCls = fActive ? (self.entryMatches(e) ? ' is-match' : ' is-dim') : '';
-      return '<div class="ahl__row' + rankCls + stateCls + '" data-id="' + e.id + '" role="button" tabindex="0">' +
+      return '<div class="ahl__row' + rankCls + stateCls + '" data-id="' + e.id + '" role="button" tabindex="0"' +
+        ' style="--ahl-i:' + i + '">' +
         '<div class="ahl__rank">' + e.rank + '</div>' +
         '<div class="ahl__place">' +
           '<div class="ahl__city">' + esc(who) + '</div>' +
@@ -849,13 +894,20 @@
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, this.cw, this.ch);
     ctx.lineJoin = 'round';
-    ctx.fillStyle = 'rgba(74,124,214,0.16)';       // soft land fill (logo blue tint)
+    // A vertical gradient instead of one flat tone: the land gains a little relief,
+    // brighter around the middle latitudes where most of the pins sit.
+    var lg = ctx.createLinearGradient(0, 0, 0, this.ch);
+    lg.addColorStop(0, 'rgba(74,124,214,0.11)');
+    lg.addColorStop(0.45, 'rgba(86,136,224,0.19)');
+    lg.addColorStop(1, 'rgba(60,104,190,0.10)');
+    ctx.fillStyle = lg;
     ctx.strokeStyle = 'rgba(120,152,224,0.22)';    // faint borders / coastline
     ctx.lineWidth = 0.6;
     var lm = MAP.lonMin, lr = MAP.lonMax - MAP.lonMin;
     var tm = MAP.latMax, vr = MAP.latMax - MAP.latMin;
     var ww = this.worldW * this.zoom, wh = this.worldH * this.zoom;
     var px = this.pan.x, py = this.pan.y, cw = this.cw, ch = this.ch;
+    this.drawGraticule(ww, wh, px, py, cw, ch, lm, lr, tm, vr);
     // tile the world horizontally so the map wraps seamlessly with infinite pan
     var kStart = Math.floor((-px) / ww) - 1;
     var kEnd = Math.ceil((cw - px) / ww) + 1;
@@ -882,6 +934,32 @@
         ctx.stroke();
       }
     }
+  };
+
+  // Faint lat/lon grid: reads as a measuring instrument rather than decoration,
+  // which is the point — this is a measurement project.
+  AHLeaderboard.prototype.drawGraticule = function (ww, wh, px, py, cw, ch, lm, lr, tm, vr) {
+    var ctx = this.ctx, step = 20;
+    ctx.save();
+    ctx.lineWidth = 0.5;
+    ctx.strokeStyle = 'rgba(120,152,224,0.09)';
+    ctx.beginPath();
+    for (var lat = -40; lat <= 80; lat += step) {
+      var y = (tm - lat) / vr * wh + py;
+      if (y < -2 || y > ch + 2) continue;
+      ctx.moveTo(0, y); ctx.lineTo(cw, y);
+    }
+    var kStart = Math.floor((-px) / ww) - 1, kEnd = Math.ceil((cw - px) / ww) + 1;
+    for (var k = kStart; k <= kEnd; k++) {
+      var ox = px + k * ww;
+      for (var lon = -180; lon < 180; lon += step) {
+        var x = (lon - lm) / lr * ww + ox;
+        if (x < -2 || x > cw + 2) continue;
+        ctx.moveTo(x, 0); ctx.lineTo(x, ch);
+      }
+    }
+    ctx.stroke();
+    ctx.restore();
   };
 
   AHLeaderboard.prototype._bbox = function (ring) {
@@ -1002,6 +1080,14 @@
       }
     }
     layer.classList.toggle('is-labelled', this.zoom >= LABEL_ZOOM);
+    // Pins fade in once, on the first paint only — the pool is recycled on every
+    // render, so a permanent rule would restage them on each pan.
+    if (!this._pinsEntered) {
+      this._pinsEntered = true;
+      layer.classList.add('is-entering');
+      var self2 = this;
+      setTimeout(function () { self2.el.pins.classList.remove('is-entering'); }, 2200);
+    }
     // Screen-space label de-collision. Clusters come best-first, so in a crowded
     // area the best-ranked label wins and the others reappear as you zoom further.
     // Width is estimated from the text (no offsetWidth: that would thrash layout).
