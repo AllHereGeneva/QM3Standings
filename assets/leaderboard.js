@@ -29,7 +29,7 @@
   var MAP = { lonMin: -180, lonMax: 180, latMin: -58, latMax: 82 };
   var WORLD_ASPECT = (MAP.lonMax - MAP.lonMin) / (MAP.latMax - MAP.latMin);
   var MAX_ZOOM = 30;   // ~3/4 of the former cap (40)
-  var LABEL_ZOOM = 5;  // from this zoom in, pins reveal their city name
+  var LABEL_ZOOM = 5;  // from this zoom in, ordinary pins reveal their city name
 
   // ---- helpers ----
   function norm(s) {
@@ -145,7 +145,7 @@
       .sort(function (a, b) { return b.cmi - a.cmi; });
     var dots = raw.filter(function (e) { return e.dot || typeof e.cmi !== 'number'; });
     scored.forEach(function (e, i) { e.rank = i + 1; e._dot = false; });
-    dots.forEach(function (e) { e.rank = 0; e._dot = true; e._noHover = !!e.noHover; });
+    dots.forEach(function (e) { e.rank = 0; e._dot = true; e._noHover = !!e.noHover; e._big = !!e.big; });
     var entries = scored.concat(dots);
     this.scoredCount = scored.length;
 
@@ -891,6 +891,9 @@
   AHLeaderboard.prototype.drawLand = function () {
     var ctx = this.ctx, dpr = this.dpr;
     if (!ctx || !this.land) return;
+    // Bail before touching the canvas if we have no measured size yet: createLinearGradient
+    // throws on a non-finite height, and that exception would abort the whole map draw.
+    if (!isFinite(this.cw) || !isFinite(this.ch) || this.ch <= 0) return;
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, this.cw, this.ch);
     ctx.lineJoin = 'round';
@@ -1050,20 +1053,24 @@
       var dot = el.firstChild, label = el.lastChild;
       el.classList.remove('is-rank-1', 'is-rank-2', 'is-rank-3');
       if (clu.items.length > 1) {
-        el.classList.add('is-cluster'); el.classList.remove('is-top', 'is-vip', 'is-dot', 'is-nohover');
+        el.classList.add('is-cluster'); el.classList.remove('is-top', 'is-vip', 'is-dot', 'is-nohover', 'is-big');
         dot.textContent = clu.items.length;
       } else {
         el.classList.remove('is-cluster');
         var isDot = !!best._dot;                       // score-less, non-interactive marker
         el.classList.toggle('is-dot', isDot);
         el.classList.toggle('is-nohover', isDot && !!best._noHover);   // silent marker: no hover, no pulse, no label
+        el.classList.toggle('is-big', isDot && !!best._big);           // a place we want simply to stand out
         el.classList.toggle('is-top', !isDot && best.rank <= 3);
         if (!isDot && best.rank <= 3) el.classList.add('is-rank-' + best.rank);
         el.classList.toggle('is-vip', !!best.vip);   // distinct marker for VIPs
         dot.textContent = '';
       }
-      // city name, revealed once zoomed past LABEL_ZOOM (see the .is-labelled rule)
-      var lbl = (clu.items.length > 1 || best._noHover) ? '' : (best.city || best.country || '');
+      // City name. Revealed past LABEL_ZOOM for ordinary pins (see .is-labelled), but
+      // always on for a `big` marker: it is highlighted precisely to be recognised.
+      // A plain silent marker stays unnamed; a cluster shows its count instead.
+      var mute = clu.items.length > 1 || (best._noHover && !best._big);
+      var lbl = mute ? '' : (best.city || best.country || '');
       if (label.textContent !== lbl) label.textContent = lbl;
       // grey out anyone outside the top 20 (VIPs always stay highlighted)
       el.classList.toggle('is-sub', !best._dot && best.rank > 20 && !best.vip);
@@ -1079,7 +1086,6 @@
         el.classList.remove('is-match', 'is-dim');
       }
     }
-    layer.classList.toggle('is-labelled', this.zoom >= LABEL_ZOOM);
     // Pins fade in once, on the first paint only — the pool is recycled on every
     // render, so a permanent rule would restage them on each pan.
     if (!this._pinsEntered) {
@@ -1088,6 +1094,7 @@
       var self2 = this;
       setTimeout(function () { self2.el.pins.classList.remove('is-entering'); }, 2200);
     }
+    layer.classList.toggle('is-labelled', this.zoom >= LABEL_ZOOM);
     // Screen-space label de-collision. Clusters come best-first, so in a crowded
     // area the best-ranked label wins and the others reappear as you zoom further.
     // Width is estimated from the text (no offsetWidth: that would thrash layout).

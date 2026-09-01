@@ -7,6 +7,16 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Archivo:wdth,wght@100..125,400..900&family=Barlow+Condensed:wght@400;500;600;700&display=swap');
 
+/* CY Grotesk Wide (demi) — the display face used for headings on wml.org, licensed
+   by WML. Self-hosted so the page never depends on Wix's opaque CDN hashes, which can
+   rotate without notice and would fail silently back to Archivo.
+   Only this weight ships: the page asks for 600 and 700 and nothing else. */
+@font-face {
+  font-family: 'CY Grotesk Wide';
+  src: url('fonts/cy-grotesk-wide-demi.woff2') format('woff2');
+  font-weight: 600 700; font-style: normal; font-stretch: normal; font-display: swap;
+}
+
 .ahl {
   /* ---- Brand tokens (World Meditation League — wml.org) ---- */
   --ahl-bg: #050f23;                 /* near-black cinematic navy */
@@ -175,13 +185,6 @@
   font-size: clamp(1.55rem, 3vw, 2.25rem);
   line-height: 1.08;
   margin: 0 0 8px;
-  background: linear-gradient(178deg, #ffffff 42%, #ffeab0 72%, var(--ahl-accent) 100%);
-  -webkit-background-clip: text; background-clip: text;
-  color: transparent;
-  -webkit-text-fill-color: transparent;
-}
-@supports not ((background-clip: text) or (-webkit-background-clip: text)) {
-  .ahl__title { color: var(--ahl-text); -webkit-text-fill-color: currentColor; }
 }
 .ahl__subtitle {
   color: var(--ahl-text-muted);
@@ -440,6 +443,15 @@
   animation: none;
   transition: transform .15s ease, box-shadow .15s ease;   /* eased again once the loop stops */
 }
+
+/* A marker we simply want seen — bigger, with a wider soft ring. Size only: it says
+   nothing about a score, and it stays as inert as any other silent marker. */
+.ahl__pin.is-big .ahl__pin-dot {
+  width: 18px; height: 18px;
+  border-color: rgba(255, 255, 255, .7);
+  box-shadow: 0 0 0 5px var(--ahl-accent-soft), 0 2px 7px rgba(0, 0, 0, .45);
+}
+.ahl__pin.is-big { z-index: 2; }
 
 /* silent marker: on the map, but never reacts and never names itself */
 .ahl__pin.is-nohover { pointer-events: none; }

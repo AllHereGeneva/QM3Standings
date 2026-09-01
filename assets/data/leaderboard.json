@@ -190,7 +190,9 @@
       "country": "Switzerland",
       "dot": true,
       "lat": 46.2044,
-      "lon": 6.1432
+      "lon": 6.1432,
+      "big": true,
+      "noHover": true
     },
     {
       "city": "",
@@ -205,13 +207,6 @@
       "dot": true,
       "lat": 13.7563,
       "lon": 100.5018
-    },
-    {
-      "city": "Basel",
-      "country": "Switzerland",
-      "dot": true,
-      "lat": 47.5596,
-      "lon": 7.5886
     }
   ]
 }
