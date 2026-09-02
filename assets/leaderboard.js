@@ -1066,11 +1066,10 @@
         el.classList.toggle('is-vip', !!best.vip);   // distinct marker for VIPs
         dot.textContent = '';
       }
-      // City name. Revealed past LABEL_ZOOM for ordinary pins (see .is-labelled), but
-      // always on for a `big` marker: it is highlighted precisely to be recognised.
-      // A plain silent marker stays unnamed; a cluster shows its count instead.
-      var mute = clu.items.length > 1 || (best._noHover && !best._big);
-      var lbl = mute ? '' : (best.city || best.country || '');
+      // Every pin names its place past LABEL_ZOOM — being non-interactive is about
+      // hover, not about staying anonymous. Country-only markers fall back to the
+      // country, which is what they are. Only a cluster stays mute: it shows a count.
+      var lbl = clu.items.length > 1 ? '' : (best.city || best.country || '');
       if (label.textContent !== lbl) label.textContent = lbl;
       // grey out anyone outside the top 20 (VIPs always stay highlighted)
       el.classList.toggle('is-sub', !best._dot && best.rank > 20 && !best.vip);

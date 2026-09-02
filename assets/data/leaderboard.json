@@ -2,8 +2,8 @@
   "meta": {
     "title": "World Meditation Challenge",
     "unit": "CMI",
-    "scaleMax": 385,
-    "updated": "2026-07-18",
+    "scaleMax": 340,
+    "updated": "2026-09-02",
     "count": "400+",
     "listTitle": "QM3 Standings",
     "oneDotEach": true,
@@ -14,7 +14,7 @@
     {
       "city": "San Francisco",
       "country": "United States",
-      "cmi": 385.2,
+      "cmi": 338.5,
       "lat": 37.7749,
       "lon": -122.4194,
       "ref": "SF_07"
@@ -22,17 +22,18 @@
     {
       "city": "Tokyo",
       "country": "Japan",
-      "cmi": 364.8,
+      "cmi": 315.0,
       "lat": 35.6895,
       "lon": 139.6917,
       "ref": "JT_36"
     },
     {
-      "city": "Sheffield",
-      "country": "United Kingdom",
-      "cmi": 336,
-      "lat": 53.3811,
-      "lon": -1.4701,
+      "city": "Tokyo",
+      "country": "Japan",
+      "cmi": 283.8,
+      "lat": 35.6895,
+      "lon": 139.6917,
+      "ref": "WMTL_HT",
       "vip": {
         "name": "Hisami Tsurumori",
         "photo": "https://allheregeneva.github.io/QM3Standings/assets/participants/hisami-tsurumori.jpg?v=16",
@@ -41,19 +42,52 @@
       }
     },
     {
-      "city": "Sydney",
-      "country": "Australia",
-      "cmi": 225,
-      "lat": -33.8688,
-      "lon": 151.2093,
-      "ref": "SY"
+      "city": "Tokyo",
+      "country": "Japan",
+      "cmi": 280.9,
+      "lat": 35.6895,
+      "lon": 139.6917,
+      "ref": "JT_46"
+    },
+    {
+      "city": "Geneva",
+      "country": "Switzerland",
+      "cmi": 268.2,
+      "lat": 46.2044,
+      "lon": 6.1432,
+      "ref": "BK_02"
+    },
+    {
+      "city": "Los Angeles",
+      "country": "United States",
+      "cmi": 262.4,
+      "lat": 34.0522,
+      "lon": -118.2437,
+      "ref": "AV_9"
     },
     {
       "city": "Tokyo",
       "country": "Japan",
-      "cmi": 284,
+      "cmi": 260.7,
       "lat": 35.6895,
       "lon": 139.6917,
+      "ref": "JT_01"
+    },
+    {
+      "city": "Tokyo",
+      "country": "Japan",
+      "cmi": 247.0,
+      "lat": 35.6895,
+      "lon": 139.6917,
+      "ref": "JT_54"
+    },
+    {
+      "city": "Tokyo",
+      "country": "Japan",
+      "cmi": 241.9,
+      "lat": 35.6895,
+      "lon": 139.6917,
+      "ref": "WMLT_YM",
       "vip": {
         "name": "Yu Mizuno",
         "photo": "https://allheregeneva.github.io/QM3Standings/assets/participants/yu-mizuno.jpg?v=16",
@@ -61,65 +95,28 @@
       }
     },
     {
-      "city": "Bylakuppe",
-      "country": "India",
-      "cmi": 283.0,
-      "lat": 12.4239,
-      "lon": 75.9739,
-      "ref": "BY_01"
-    },
-    {
-      "city": "Bengaluru",
-      "country": "India",
-      "cmi": 262.6,
-      "lat": 12.9716,
-      "lon": 77.5946,
-      "ref": "BG_18"
-    },
-    {
       "city": "Tokyo",
       "country": "Japan",
-      "cmi": 259.9,
+      "cmi": 237.5,
       "lat": 35.6895,
       "lon": 139.6917,
       "ref": "JT_41"
-    },
-    {
-      "city": "Oxford",
-      "country": "United Kingdom",
-      "cmi": 259.5,
-      "lat": 51.752,
-      "lon": -1.2577,
-      "ref": "OX_07"
-    },
-    {
-      "city": "Bengaluru",
-      "country": "India",
-      "cmi": 257.9,
-      "lat": 12.9716,
-      "lon": 77.5946,
-      "ref": "BG_06"
     },
     {
       "city": "Dubai",
       "country": "United Arab Emirates",
       "dot": true,
       "lat": 25.2048,
-      "lon": 55.2708
+      "lon": 55.2708,
+      "noHover": true
     },
     {
       "city": "Kuala Lumpur",
       "country": "Malaysia",
       "dot": true,
       "lat": 3.139,
-      "lon": 101.6869
-    },
-    {
-      "city": "Los Angeles",
-      "country": "United States",
-      "dot": true,
-      "lat": 34.0522,
-      "lon": -118.2437
+      "lon": 101.6869,
+      "noHover": true
     },
     {
       "city": "Sacramento",
@@ -134,56 +131,88 @@
       "country": "India",
       "dot": true,
       "lat": 13.0827,
-      "lon": 80.2707
+      "lon": 80.2707,
+      "noHover": true
     },
     {
       "city": "Tiruvannamalai",
       "country": "India",
       "dot": true,
       "lat": 12.2253,
-      "lon": 79.0747
+      "lon": 79.0747,
+      "noHover": true
     },
     {
       "city": "Hyderabad",
       "country": "India",
       "dot": true,
       "lat": 17.385,
-      "lon": 78.4867
+      "lon": 78.4867,
+      "noHover": true
     },
     {
       "city": "New Delhi",
       "country": "India",
       "dot": true,
       "lat": 28.6139,
-      "lon": 77.209
+      "lon": 77.209,
+      "noHover": true
     },
     {
       "city": "Kamakura",
       "country": "Japan",
       "dot": true,
       "lat": 35.3192,
-      "lon": 139.5466
+      "lon": 139.5466,
+      "noHover": true
     },
     {
       "city": "",
       "country": "Germany",
       "dot": true,
       "lat": 52.52,
-      "lon": 13.405
+      "lon": 13.405,
+      "noHover": true
     },
     {
       "city": "Paris",
       "country": "France",
       "dot": true,
       "lat": 48.8566,
-      "lon": 2.3522
+      "lon": 2.3522,
+      "noHover": true
     },
     {
       "city": "",
       "country": "Romania",
       "dot": true,
       "lat": 44.4268,
-      "lon": 26.1025
+      "lon": 26.1025,
+      "noHover": true
+    },
+    {
+      "city": "",
+      "country": "Italy",
+      "dot": true,
+      "lat": 41.9028,
+      "lon": 12.4964,
+      "noHover": true
+    },
+    {
+      "city": "",
+      "country": "Thailand",
+      "dot": true,
+      "lat": 13.7563,
+      "lon": 100.5018,
+      "noHover": true
+    },
+    {
+      "city": "Sydney",
+      "country": "Australia",
+      "dot": true,
+      "lat": -33.8688,
+      "lon": 151.2093,
+      "noHover": true
     },
     {
       "city": "Geneva",
@@ -195,18 +224,36 @@
       "noHover": true
     },
     {
-      "city": "",
-      "country": "Italy",
+      "city": "Sheffield",
+      "country": "United Kingdom",
       "dot": true,
-      "lat": 41.9028,
-      "lon": 12.4964
+      "lat": 53.3811,
+      "lon": -1.4701,
+      "noHover": true
     },
     {
-      "city": "",
-      "country": "Thailand",
+      "city": "Oxford",
+      "country": "United Kingdom",
       "dot": true,
-      "lat": 13.7563,
-      "lon": 100.5018
+      "lat": 51.752,
+      "lon": -1.2577,
+      "noHover": true
+    },
+    {
+      "city": "Bengaluru",
+      "country": "India",
+      "dot": true,
+      "lat": 12.9716,
+      "lon": 77.5946,
+      "noHover": true
+    },
+    {
+      "city": "Bylakuppe",
+      "country": "India",
+      "dot": true,
+      "lat": 12.4239,
+      "lon": 75.9739,
+      "noHover": true
     }
   ]
 }

@@ -1,9 +1,10 @@
 # PRIVATE — never publish source EEG data or the source↔entry concordance
 # (anchored to repo root so the PUBLIC assets/data/*.json is still published)
-/data/
-/data2/
-/data3/
+# /data*/ rather than one line per folder: every new drop (data4, data5…) is
+# covered the moment it lands, instead of after someone remembers to add it.
+/data*/
 /build/
+/incoming/
 
 # secrets — this repo is PUBLIC (GitHub Pages): a committed key would be exposed
 .env
