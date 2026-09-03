@@ -29,7 +29,10 @@
   var MAP = { lonMin: -180, lonMax: 180, latMin: -58, latMax: 82 };
   var WORLD_ASPECT = (MAP.lonMax - MAP.lonMin) / (MAP.latMax - MAP.latMin);
   var MAX_ZOOM = 30;   // ~3/4 of the former cap (40)
-  var LABEL_ZOOM = 5;  // from this zoom in, ordinary pins reveal their city name
+  // From this zoom in, pins reveal their city name. Low, because the de-collision
+  // pass below already drops whatever would overlap — the threshold only keeps the
+  // untouched world view clean, it is no longer what prevents clutter.
+  var LABEL_ZOOM = 2;
 
   // ---- helpers ----
   function norm(s) {
@@ -471,7 +474,8 @@
         '<div class="ahl__rank">' + e.rank + '</div>' +
         '<div class="ahl__place">' +
           '<div class="ahl__city">' + esc(who) + '</div>' +
-          '<div class="ahl__meta"><span>' + esc(e.city ? e.city + ', ' + e.country : e.country) + '</span></div>' +
+          '<div class="ahl__meta"><span>' + esc(e.city ? e.city + ', ' + e.country : e.country) + '</span>' +
+            (e.tag ? '<span class="ahl__tag">' + esc(e.tag) + '</span>' : '') + '</div>' +
         '</div>' +
         '<div class="ahl__score"><div class="ahl__cmi">' + fmtInt(e.cmi) + '</div></div>' +
       '</div>';
@@ -1071,6 +1075,13 @@
       // country, which is what they are. Only a cluster stays mute: it shows a count.
       var lbl = clu.items.length > 1 ? '' : (best.city || best.country || '');
       if (label.textContent !== lbl) label.textContent = lbl;
+      // Explicit stacking: better rank always on top, markers always underneath.
+      // Set inline so it beats every CSS z-index and stays predictable.
+      var z;
+      if (this.filterActive() && clu.items.some(function (x) { return this.entryMatches(x); }, this)) z = 200;
+      else if (best._dot) z = best._big ? 50 : 10;
+      else z = 190 + Math.max(0, 10 - (best.rank || 10));
+      el.style.zIndex = z;
       // grey out anyone outside the top 20 (VIPs always stay highlighted)
       el.classList.toggle('is-sub', !best._dot && best.rank > 20 && !best.vip);
       // highlight state (from list hover)
@@ -1150,6 +1161,7 @@
       html = '<div class="ahl__tip-rank">Rank #' + best.rank + '</div>' +
         '<div class="ahl__tip-city">' + esc(best.vip ? best.vip.name : (best.dbg || 'Meditator ' + best.rank)) + '</div>' +
         '<div class="ahl__tip-country">' + esc(best.city ? best.city + ', ' + best.country : best.country) + '</div>' +
+        (best.tag ? '<div class="ahl__tip-tag">' + esc(best.tag) + '</div>' : '') +
         '<div class="ahl__tip-cmi">' + fmtInt(best.cmi) + ' <small>' + this.unit + '</small></div>' +
         '<div class="ahl__tip-date">' + fmtDate(best.date) + '</div>';
     }

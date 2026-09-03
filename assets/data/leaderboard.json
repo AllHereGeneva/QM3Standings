@@ -28,12 +28,13 @@
       "ref": "SF_07"
     },
     {
-      "city": "Tokyo",
-      "country": "Japan",
+      "city": "Sheffield",
+      "country": "United Kingdom",
       "cmi": 336.0,
-      "lat": 35.6895,
-      "lon": 139.6917,
-      "ref": "WMTL_HT"
+      "lat": 53.3811,
+      "lon": -1.4701,
+      "ref": "WMTL_HT",
+      "tag": "WML Tokyo 2025"
     },
     {
       "city": "Tokyo",
@@ -65,7 +66,8 @@
       "cmi": 284.0,
       "lat": 35.6895,
       "lon": 139.6917,
-      "ref": "WMLT_YM"
+      "ref": "WMLT_YM",
+      "tag": "WML Tokyo 2025"
     },
     {
       "city": "Tokyo",
@@ -97,7 +99,8 @@
       "cmi": 208.0,
       "lat": 35.6895,
       "lon": 139.6917,
-      "ref": "WML_OB"
+      "ref": "WML_OB",
+      "tag": "WML Tokyo 2025"
     },
     {
       "city": "Dubai",
@@ -209,14 +212,6 @@
       "dot": true,
       "lat": -33.8688,
       "lon": 151.2093,
-      "noHover": true
-    },
-    {
-      "city": "Sheffield",
-      "country": "United Kingdom",
-      "dot": true,
-      "lat": 53.3811,
-      "lon": -1.4701,
       "noHover": true
     },
     {

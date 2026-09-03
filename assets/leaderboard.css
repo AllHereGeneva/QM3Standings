@@ -418,31 +418,24 @@
 .ahl__pin:not(.is-dot):not(.is-cluster):nth-child(4n+3)::after { animation-delay: 2.8s; }
 .ahl__pin:not(.is-dot):not(.is-cluster):nth-child(4n+4)::after { animation-delay: 4.2s; }
 
-/* score-less markers: just a slow breath, so the place feels alive without asking
-   for attention. Nothing but the dot's own scale — no ring, no halo. */
-.ahl__pin.is-dot:not(.is-nohover) .ahl__pin-dot {
+/* score-less markers: a slow, slight breath, so the place feels alive without asking
+   for attention. Nothing but the dot's own scale — no ring, no halo. Applies to every
+   marker, interactive or not: being silent is about hover, not about being frozen. */
+.ahl__pin.is-dot .ahl__pin-dot {
   animation: ahl-dot-breathe 4.5s ease-in-out infinite;
-  /* The base dot carries `transition: transform` (for hover) and a drop shadow offset
-     1px downwards. Under a scale animation the transition fights each frame, and the
-     offset shadow grows downwards only — which reads as the dot stretching vertically
-     rather than breathing evenly. Neither belongs on an animated marker. */
-  transition: none;
-  box-shadow: 0 0 0 2px var(--ahl-accent-soft);
 }
 @keyframes ahl-dot-breathe {
-  0%, 100% { transform: scale(1); }
-  50%      { transform: scale(1.35); }
+  0%, 100% { opacity: 1; }
+  50%      { opacity: .55; }
 }
 .ahl__pin.is-dot:nth-child(3n+2) .ahl__pin-dot { animation-delay: 1.5s; }
 .ahl__pin.is-dot:nth-child(3n+3) .ahl__pin-dot { animation-delay: 3s; }
 /* any state that sets its own transform wins: stop the loop so it isn't overridden */
+/* a marker singled out by hover or a filter holds steady instead of breathing */
 .ahl__pin.is-dot:hover .ahl__pin-dot,
 .ahl__pin.is-dot.is-active .ahl__pin-dot,
 .ahl__pin.is-dot.is-match .ahl__pin-dot,
-.ahl__pin.is-dot.is-dim .ahl__pin-dot {
-  animation: none;
-  transition: transform .15s ease, box-shadow .15s ease;   /* eased again once the loop stops */
-}
+.ahl__pin.is-dot.is-dim .ahl__pin-dot { animation: none; }
 
 /* A marker we simply want seen — bigger, with a wider soft ring. Size only: it says
    nothing about a score, and it stays as inert as any other silent marker. */
@@ -480,16 +473,6 @@
 /* bio-performer marker: a gold ring (distinct design; clusters like any pin) */
 .ahl__pin.is-vip .ahl__pin-dot {
   box-shadow: 0 0 0 2px var(--ahl-bg), 0 0 0 4px var(--ahl-accent), 0 2px 8px rgba(0,0,0,.55);
-}
-/* top-3: the star badge, always solo on the map (coexists with podium dot colours) */
-.ahl__pin.is-top::before {
-  content: "★";
-  position: absolute; left: 50%; top: 50%;
-  transform: translate(4px, -16px);
-  font-size: 12px; line-height: 1;
-  color: var(--ahl-accent);
-  text-shadow: 0 1px 2px rgba(0,0,0,.7);
-  pointer-events: none;
 }
 
 /* dataset toggle (segmented pill, top-left of the map) */
@@ -753,6 +736,7 @@
   border-radius: 10px;
   border: 1px solid transparent;
   cursor: pointer;
+  position: relative;        /* anchor for the corner provenance mark */
   transition: background .16s ease, border-color .16s ease, opacity .16s ease;
   animation: ahl-row-in .45s ease-out backwards;
   animation-delay: calc(var(--ahl-i, 0) * 55ms);
@@ -785,12 +769,32 @@
 .ahl__row.rank-1 .ahl__rank { color: var(--ahl-gold); }
 .ahl__row.rank-2 .ahl__rank { color: var(--ahl-silver); }
 .ahl__row.rank-3 .ahl__rank { color: var(--ahl-bronze); }
-/* podium emphasis: tinted rail on the top-3 rows */
-.ahl__row.rank-1 { border-color: rgba(244,180,0,0.45); background: rgba(244,180,0,0.08); }
-.ahl__row.rank-2 { border-color: rgba(207,216,230,0.32); }
-.ahl__row.rank-3 { border-color: rgba(245,143,10,0.32); }
+/* No frame on the podium rows — the rank number's colour carries the distinction. */
 
 .ahl__place { min-width: 0; }
+/* provenance mark: says an entry is an officially published WML result, whose scale
+   differs from the research pipeline the rest of the table comes from. Plain text, no
+   box: a bordered chip made the row taller and read as a second line. */
+.ahl__tag {
+  position: absolute;
+  top: 6px; right: 9px;
+  padding: 2px 6px;
+  border-radius: 4px;
+  border: 1px solid rgba(244, 180, 0, 0.30);
+  background: rgba(244, 180, 0, 0.09);
+  font-family: var(--ahl-font-display);
+  font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  font-size: 8.5px; line-height: 1;
+  color: var(--ahl-accent);
+  white-space: nowrap;
+  pointer-events: none;
+}
+.ahl__tip-tag {
+  margin-top: 3px;
+  font-weight: 600; letter-spacing: .08em; text-transform: uppercase;
+  font-size: 9.5px;
+  color: var(--ahl-accent);
+}
 .ahl__city { font-weight: 600; font-size: 14.5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .ahl__meta { font-size: 11px; color: var(--ahl-text-dim); display: flex; gap: 8px; margin-top: 2px; }
 .ahl__meta .ahl__flag { font-size: 12px; }
