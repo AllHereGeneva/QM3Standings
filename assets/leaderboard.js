@@ -415,7 +415,7 @@
 
     var note = meta.note
       ? '<div class="ahl__note">' + esc(meta.note) +
-          (meta.learnMoreUrl ? ' <a class="ahl__learn" href="' + esc(meta.learnMoreUrl) +
+          (safeUrl(meta.learnMoreUrl) ? ' <a class="ahl__learn" href="' + esc(safeUrl(meta.learnMoreUrl)) +
             '" target="_blank" rel="noopener noreferrer">Learn more &rarr;</a>' : '') + '</div>'
       : '';
     var footHtml = note +
@@ -525,6 +525,24 @@
     return String(s).replace(/[&<>"]/g, function (c) {
       return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c];
     });
+  }
+
+  // esc() escapes & < > " — it does NOT neutralise a URL scheme. `javascript:alert(1)` survives
+  // it intact and runs on click. Every field below comes from a world-readable document that is
+  // rendered as HTML here, so anything reaching an href or a src is checked for its scheme too.
+  //
+  // The rule is an allowlist by exclusion: a value carrying ANY scheme must carry http(s).
+  // Relative paths keep working (assets/participants/x.jpg, /foo, ./x) because they carry no
+  // scheme at all. Leading whitespace and control characters are stripped first — browsers
+  // ignore them, so "\tjavascript:…" is the same URL to them and must be to us.
+  //
+  // This guard lives at the RENDERING side on purpose. The upload door refuses these values too,
+  // but a rule that only holds on one path is not a rule: this page also renders documents
+  // written before that door existed.
+  function safeUrl(s) {
+    var u = String(s == null ? '' : s).replace(/[\u0000-\u0020]/g, '');
+    if (/^[a-z][a-z0-9+.\-]*:/i.test(u) && !/^https?:/i.test(u)) return '';
+    return u;
   }
 
   // ---- projection & transform ----
@@ -822,8 +840,8 @@
 
   AHLeaderboard.prototype.openVipCard = function (e, pin, hover) {
     var v = e.vip; if (!v) return;
-    var media = v.photo
-      ? '<img class="ahl__card-photo" src="' + esc(v.photo) + '" alt="' + esc(v.name) + '" />'
+    var media = safeUrl(v.photo)
+      ? '<img class="ahl__card-photo" src="' + esc(safeUrl(v.photo)) + '" alt="' + esc(v.name) + '" />'
       : '<div class="ahl__card-mono" aria-hidden="true">' + esc(initials(v.name)) + '</div>';
     var tag = v.tag ? '<span class="ahl__card-tag">' + esc(v.tag) + '</span>' : '';
     this.el.card.innerHTML =

@@ -140,13 +140,25 @@ et ne doit jamais en contenir.
 | | Qui | Auth | Où ça tourne |
 |---|---|---|---|
 | **Lecture** | tout visiteur | aucune | navigateur |
-| **Écriture** | Loup | clé d'admin | **son portable uniquement** |
+| **Écriture** | la machine qui publie | **clé d'upload** (`X-Upload-Key`) | **un portable uniquement** |
 
-- Le token vit dans `build/.qm3-token` (`chmod 600`). `build/` est ignoré par git.
+- La clé vit dans `build/.qm3-upload-key` (`chmod 600`). `build/` est ignoré par git.
   Le script refuse de démarrer si le fichier est lisible par d'autres.
-- `QM3_ADMIN_TOKEN` en variable d'environnement est prioritaire, si on préfère l'export manuel.
-- C'est une **clé d'administration personnelle**, révocable seule sans casser les autres accès.
-- Le token **n'est jamais utilisé par le site** : le navigateur ne fait que lire.
+- `QM3_UPLOAD_KEY` en variable d'environnement est prioritaire, si on préfère l'export manuel.
+- C'est une clé **en écriture seule, limitée au seul document `qm3`** : si elle fuit, elle ne
+  peut rien lire et rien remplacer d'autre. Elle se révoque pour un détenteur sans couper les
+  autres.
+- Elle passe par son **propre en-tête**, jamais par `Authorization` — qui signifie déjà « jeton
+  de session » sur ces routes. Deux natures de justificatif sur un même en-tête, et un 401
+  cesse de dire laquelle a échoué.
+- La clé **n'est jamais utilisée par le site** : le navigateur ne fait que lire.
+
+> ⚠️ **Historique, à ne pas refaire.** Jusqu'au 3 septembre 2026, ce script publiait via
+> `POST /admin/documents/qm3` avec un **jeton d'administration de plein exercice** gardé dans
+> `build/.qm3-token` — un jeton qui ouvrait les comptes, les crédits, les réservations et les
+> textes clients, pour publier un JSON. Ce jeton a été révoqué et le fichier supprimé.
+> **Ne recréez pas ce fichier.** Si la clé d'upload manque, demandez-en une : la solution n'est
+> jamais de reprendre un justificatif plus large parce qu'il est sous la main.
 - Ne jamais publier les données EEG sources : `data/`, `data2/`, `data3/`, `build/` sont ignorés.
 
 **Passer le dépôt en privé ne protégerait rien** (il n'y a pas de secret dedans) et casserait
@@ -195,5 +207,5 @@ silencieux n'affichent jamais de libellé.
 | `assets/data/gazetteer.json` | oui | Ville → coordonnées, **inutilisé** (toutes les entrées ont `lat`/`lon`) |
 | `assets/participants/*.jpg` | oui | Photos, servies par GitHub Pages |
 | `build/push-standings.py` | **non** | Publication vers la base |
-| `build/.qm3-token` | **non** | Clé d'admin (`chmod 600`) |
+| `build/.qm3-upload-key` | **non** | Clé d'upload, portée `qm3` (`chmod 600`) |
 | `data/`, `data2/`, `data3/` | **non** | Données EEG sources — ne jamais publier |
