@@ -257,10 +257,10 @@
               '<a href="https://www.wml.org/updates" target="_blank" rel="noopener noreferrer">News</a>' +
               '<a href="https://www.wml.org/team" target="_blank" rel="noopener noreferrer">Team</a>' +
             '</div>' +
-            '<a class="ahl__nav-cta" href="mailto:hello@wml.org">Join the League</a>' +
+            '<a class="ahl__nav-cta" href="mailto:hello@wml.org">Join the Challenge</a>' +
           '</nav>' +
           '<div class="ahl__hero">' +
-            '<span class="ahl__eyebrow">QM3 Standings</span>' +
+            '<span class="ahl__eyebrow">QM3</span>' +
             '<h2 class="ahl__title" data-ahl="title">World Meditation Challenge</h2>' +
             '<div class="ahl__stats" data-ahl="stats"></div>' +
           '</div>' +
@@ -287,10 +287,10 @@
           '</div>' +
           '<aside class="ahl__listcard">' +
             '<button type="button" class="ahl__toggle" data-ahl="toggle" aria-label="Hide standings" aria-expanded="true">' +
-              '<span class="ahl__toggle-label">QM3 Standings</span>' +
+              '<span class="ahl__toggle-label">QM3</span>' +
               '<span class="ahl__toggle-icon" aria-hidden="true">‹</span>' +
             '</button>' +
-            '<h3 class="ahl__list-title" data-ahl="listtitle">QM3 Standings</h3>' +
+            '<h3 class="ahl__list-title" data-ahl="listtitle">QM3</h3>' +
             '<p class="ahl__list-sub" data-ahl="listsub"></p>' +
             '<div class="ahl__selbar" data-ahl="selbar" hidden></div>' +
             '<div class="ahl__rows" data-ahl="rows">' +
@@ -393,7 +393,7 @@
     // /eeg/standings/qm3 meta) still says "QM3 Standings" there, which would put the
     // old name back on every load. That name now sits in the eyebrow above it.
     // meta.listTitle still drives the standings panel, which is feed-owned.
-    this.el.listtitle.textContent = meta.listTitle || 'QM3 Standings';
+    this.el.listtitle.textContent = meta.listTitle || 'QM3';
 
     var countries = {};
     this.entries.forEach(function (e) { if (e.country) countries[e.country] = 1; });
@@ -464,7 +464,7 @@
     }
     this.el.rows.innerHTML = top.map(function (e, i) {
       var rankCls = e.rank <= 3 ? ' rank-' + e.rank : '';
-      var who = e.vip ? e.vip.name : (e.dbg || 'Participant ' + e.rank);   // e.dbg = TEMP debug filename
+      var who = e.vip ? e.vip.name : (e.dbg || 'Meditator ' + e.rank);   // e.dbg = TEMP debug filename
       var stateCls = fActive ? (self.entryMatches(e) ? ' is-match' : ' is-dim') : '';
       return '<div class="ahl__row' + rankCls + stateCls + '" data-id="' + e.id + '" role="button" tabindex="0"' +
         ' style="--ahl-i:' + i + '">' +
@@ -1148,7 +1148,7 @@
         '<div class="ahl__tip-more">Zoom in to expand this cluster</div>';
     } else {
       html = '<div class="ahl__tip-rank">Rank #' + best.rank + '</div>' +
-        '<div class="ahl__tip-city">' + esc(best.vip ? best.vip.name : (best.dbg || 'Participant ' + best.rank)) + '</div>' +
+        '<div class="ahl__tip-city">' + esc(best.vip ? best.vip.name : (best.dbg || 'Meditator ' + best.rank)) + '</div>' +
         '<div class="ahl__tip-country">' + esc(best.city ? best.city + ', ' + best.country : best.country) + '</div>' +
         '<div class="ahl__tip-cmi">' + fmtInt(best.cmi) + ' <small>' + this.unit + '</small></div>' +
         '<div class="ahl__tip-date">' + fmtDate(best.date) + '</div>';

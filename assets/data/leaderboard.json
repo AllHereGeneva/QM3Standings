@@ -2,19 +2,27 @@
   "meta": {
     "title": "World Meditation Challenge",
     "unit": "CMI",
-    "scaleMax": 340,
-    "updated": "2026-09-02",
+    "scaleMax": 480,
+    "updated": "2026-09-03",
     "count": "400+",
-    "listTitle": "QM3 Standings",
+    "listTitle": "QM3",
     "oneDotEach": true,
     "note": "SMI coming up soon.",
     "learnMoreUrl": "https://www.wml.org"
   },
   "entries": [
     {
+      "city": "Geneva",
+      "country": "Switzerland",
+      "cmi": 479.7,
+      "lat": 46.2044,
+      "lon": 6.1432,
+      "ref": "BK_02"
+    },
+    {
       "city": "San Francisco",
       "country": "United States",
-      "cmi": 338.5,
+      "cmi": 360.2,
       "lat": 37.7749,
       "lon": -122.4194,
       "ref": "SF_07"
@@ -22,7 +30,15 @@
     {
       "city": "Tokyo",
       "country": "Japan",
-      "cmi": 315.0,
+      "cmi": 336.0,
+      "lat": 35.6895,
+      "lon": 139.6917,
+      "ref": "WMTL_HT"
+    },
+    {
+      "city": "Tokyo",
+      "country": "Japan",
+      "cmi": 312.4,
       "lat": 35.6895,
       "lon": 139.6917,
       "ref": "JT_36"
@@ -30,37 +46,15 @@
     {
       "city": "Tokyo",
       "country": "Japan",
-      "cmi": 283.8,
-      "lat": 35.6895,
-      "lon": 139.6917,
-      "ref": "WMTL_HT",
-      "vip": {
-        "name": "Hisami Tsurumori",
-        "photo": "https://allheregeneva.github.io/QM3Standings/assets/participants/hisami-tsurumori.jpg?v=16",
-        "tag": "Tokyo 2025 Top Performer",
-        "bio": "Originally from Japan, now in Sheffield, Hisami has practiced Samatha meditation in the Theravada tradition for 16+ years as a tool for mental and physical well-being."
-      }
-    },
-    {
-      "city": "Tokyo",
-      "country": "Japan",
-      "cmi": 280.9,
+      "cmi": 299.2,
       "lat": 35.6895,
       "lon": 139.6917,
       "ref": "JT_46"
     },
     {
-      "city": "Geneva",
-      "country": "Switzerland",
-      "cmi": 268.2,
-      "lat": 46.2044,
-      "lon": 6.1432,
-      "ref": "BK_02"
-    },
-    {
       "city": "Los Angeles",
       "country": "United States",
-      "cmi": 262.4,
+      "cmi": 291.0,
       "lat": 34.0522,
       "lon": -118.2437,
       "ref": "AV_9"
@@ -68,39 +62,42 @@
     {
       "city": "Tokyo",
       "country": "Japan",
-      "cmi": 260.7,
+      "cmi": 284.0,
+      "lat": 35.6895,
+      "lon": 139.6917,
+      "ref": "WMLT_YM"
+    },
+    {
+      "city": "Tokyo",
+      "country": "Japan",
+      "cmi": 272.1,
       "lat": 35.6895,
       "lon": 139.6917,
       "ref": "JT_01"
     },
     {
-      "city": "Tokyo",
-      "country": "Japan",
-      "cmi": 247.0,
-      "lat": 35.6895,
-      "lon": 139.6917,
-      "ref": "JT_54"
+      "city": "Bengaluru",
+      "country": "India",
+      "cmi": 271.6,
+      "lat": 12.9716,
+      "lon": 77.5946,
+      "ref": "PV_13"
+    },
+    {
+      "city": "Geneva",
+      "country": "Switzerland",
+      "cmi": 267.6,
+      "lat": 46.2044,
+      "lon": 6.1432,
+      "ref": "B_E_20-08"
     },
     {
       "city": "Tokyo",
       "country": "Japan",
-      "cmi": 241.9,
+      "cmi": 208.0,
       "lat": 35.6895,
       "lon": 139.6917,
-      "ref": "WMLT_YM",
-      "vip": {
-        "name": "Yu Mizuno",
-        "photo": "https://allheregeneva.github.io/QM3Standings/assets/participants/yu-mizuno.jpg?v=16",
-        "bio": "A Tokyo-based certified yoga teacher whose practice spans Vipassana, Tibetan Buddhist retreats, pranayama and Kriya yoga, and regular Zen meditation at a Tokyo temple."
-      }
-    },
-    {
-      "city": "Tokyo",
-      "country": "Japan",
-      "cmi": 237.5,
-      "lat": 35.6895,
-      "lon": 139.6917,
-      "ref": "JT_41"
+      "ref": "WML_OB"
     },
     {
       "city": "Dubai",
@@ -215,15 +212,6 @@
       "noHover": true
     },
     {
-      "city": "Geneva",
-      "country": "Switzerland",
-      "dot": true,
-      "lat": 46.2044,
-      "lon": 6.1432,
-      "big": true,
-      "noHover": true
-    },
-    {
       "city": "Sheffield",
       "country": "United Kingdom",
       "dot": true,
@@ -240,19 +228,20 @@
       "noHover": true
     },
     {
-      "city": "Bengaluru",
-      "country": "India",
-      "dot": true,
-      "lat": 12.9716,
-      "lon": 77.5946,
-      "noHover": true
-    },
-    {
       "city": "Bylakuppe",
       "country": "India",
       "dot": true,
       "lat": 12.4239,
       "lon": 75.9739,
+      "noHover": true
+    },
+    {
+      "city": "Geneva",
+      "country": "Switzerland",
+      "dot": true,
+      "lat": 46.2044,
+      "lon": 6.1432,
+      "big": true,
       "noHover": true
     }
   ]
