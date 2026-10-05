@@ -3,8 +3,20 @@
 # /data*/ rather than one line per folder: every new drop (data4, data5…) is
 # covered the moment it lands, instead of after someone remembers to add it.
 /data*/
-/build/
 /incoming/
+
+# build/ is an ALLOW-list: everything in it is ignored (CSV, JSON, keys, caches,
+# and any file added later) EXCEPT the tooling scripts named below. A new script
+# must be added here by name, after checking it holds no secret and no real name.
+# build-live-data.py stays ignored on purpose: it contains a real person's name.
+/build/*
+!/build/build-gazetteer.py
+!/build/build-sample-data.py
+!/build/build-world-land.py
+!/build/bump-version.py
+!/build/inspect-excluded.py
+!/build/push-standings.py
+!/build/release.py
 
 # secrets — this repo is PUBLIC (GitHub Pages): a committed key would be exposed
 .env
