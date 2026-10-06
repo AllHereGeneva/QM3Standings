@@ -1,242 +1,242 @@
 {
   "meta": {
-    "title": "World Meditation Challenge",
+    "note": "SMI coming up soon.",
     "unit": "CMI",
-    "scaleMax": 480,
-    "updated": "2026-09-03",
     "count": "400+",
+    "title": "World Meditation Challenge",
+    "updated": "2026-09-03",
+    "scaleMax": 370,
     "listTitle": "QM3",
     "oneDotEach": true,
-    "note": "SMI coming up soon.",
     "learnMoreUrl": "https://www.wml.org"
   },
   "entries": [
     {
-      "city": "Geneva",
-      "country": "Switzerland",
-      "cmi": 479.7,
-      "lat": 46.2044,
-      "lon": 6.1432,
-      "ref": "BK_02"
-    },
-    {
-      "city": "San Francisco",
-      "country": "United States",
       "cmi": 360.2,
       "lat": 37.7749,
       "lon": -122.4194,
-      "ref": "SF_07"
+      "ref": "SF_07",
+      "city": "San Francisco",
+      "country": "United States"
     },
     {
-      "city": "Sheffield",
-      "country": "United Kingdom",
-      "cmi": 336.0,
+      "cmi": 336,
       "lat": 53.3811,
       "lon": -1.4701,
-      "ref": "WMTL_HT",
-      "tag": "WML Tokyo 2025"
+      "ref": "WMLT_01",
+      "tag": "WML Tokyo 2025",
+      "city": "Sheffield",
+      "country": "United Kingdom"
     },
     {
-      "city": "Tokyo",
-      "country": "Japan",
       "cmi": 312.4,
       "lat": 35.6895,
       "lon": 139.6917,
-      "ref": "JT_36"
+      "ref": "JT_36",
+      "city": "Tokyo",
+      "country": "Japan"
     },
     {
-      "city": "Tokyo",
-      "country": "Japan",
       "cmi": 299.2,
       "lat": 35.6895,
       "lon": 139.6917,
-      "ref": "JT_46"
+      "ref": "JT_46",
+      "city": "Tokyo",
+      "country": "Japan"
     },
     {
-      "city": "Los Angeles",
-      "country": "United States",
-      "cmi": 291.0,
+      "cmi": 291,
       "lat": 34.0522,
       "lon": -118.2437,
-      "ref": "AV_9"
+      "ref": "AV_9",
+      "city": "Los Angeles",
+      "country": "United States"
     },
     {
-      "city": "Tokyo",
-      "country": "Japan",
-      "cmi": 284.0,
+      "cmi": 284,
       "lat": 35.6895,
       "lon": 139.6917,
-      "ref": "WMLT_YM",
-      "tag": "WML Tokyo 2025"
+      "ref": "WMLT_02",
+      "tag": "WML Tokyo 2025",
+      "city": "Tokyo",
+      "country": "Japan"
     },
     {
-      "city": "Tokyo",
-      "country": "Japan",
       "cmi": 272.1,
       "lat": 35.6895,
       "lon": 139.6917,
-      "ref": "JT_01"
+      "ref": "JT_01",
+      "city": "Tokyo",
+      "country": "Japan"
     },
     {
-      "city": "Bengaluru",
-      "country": "India",
       "cmi": 271.6,
       "lat": 12.9716,
       "lon": 77.5946,
-      "ref": "PV_13"
+      "ref": "PV_13",
+      "city": "Bengaluru",
+      "country": "India"
     },
     {
-      "city": "Geneva",
-      "country": "Switzerland",
       "cmi": 267.6,
       "lat": 46.2044,
       "lon": 6.1432,
-      "ref": "B_E_20-08"
+      "ref": "B_E_20-08",
+      "city": "Geneva",
+      "country": "Switzerland"
     },
     {
-      "city": "Tokyo",
-      "country": "Japan",
-      "cmi": 208.0,
+      "cmi": 262.9,
+      "lat": 12.9716,
+      "lon": 77.5946,
+      "ref": "AOL_18",
+      "city": "Bengaluru",
+      "country": "India"
+    },
+    {
+      "cmi": 208,
       "lat": 35.6895,
       "lon": 139.6917,
-      "ref": "WML_OB",
-      "tag": "WML Tokyo 2025"
+      "ref": "WMLT_03",
+      "tag": "WML Tokyo 2025",
+      "city": "Tokyo",
+      "country": "Japan"
     },
     {
-      "city": "Dubai",
-      "country": "United Arab Emirates",
       "dot": true,
       "lat": 25.2048,
       "lon": 55.2708,
+      "city": "Dubai",
+      "country": "United Arab Emirates",
       "noHover": true
     },
     {
-      "city": "Kuala Lumpur",
-      "country": "Malaysia",
       "dot": true,
       "lat": 3.139,
       "lon": 101.6869,
+      "city": "Kuala Lumpur",
+      "country": "Malaysia",
       "noHover": true
     },
     {
-      "city": "Sacramento",
-      "country": "United States",
       "dot": true,
       "lat": 38.5816,
       "lon": -121.4944,
+      "city": "Sacramento",
+      "country": "United States",
       "noHover": true
     },
     {
-      "city": "Chennai",
-      "country": "India",
       "dot": true,
       "lat": 13.0827,
       "lon": 80.2707,
+      "city": "Chennai",
+      "country": "India",
       "noHover": true
     },
     {
-      "city": "Tiruvannamalai",
-      "country": "India",
       "dot": true,
       "lat": 12.2253,
       "lon": 79.0747,
+      "city": "Tiruvannamalai",
+      "country": "India",
       "noHover": true
     },
     {
-      "city": "Hyderabad",
-      "country": "India",
       "dot": true,
       "lat": 17.385,
       "lon": 78.4867,
+      "city": "Hyderabad",
+      "country": "India",
       "noHover": true
     },
     {
-      "city": "New Delhi",
-      "country": "India",
       "dot": true,
       "lat": 28.6139,
       "lon": 77.209,
+      "city": "New Delhi",
+      "country": "India",
       "noHover": true
     },
     {
-      "city": "Kamakura",
-      "country": "Japan",
       "dot": true,
       "lat": 35.3192,
       "lon": 139.5466,
+      "city": "Kamakura",
+      "country": "Japan",
       "noHover": true
     },
     {
-      "city": "",
-      "country": "Germany",
       "dot": true,
       "lat": 52.52,
       "lon": 13.405,
+      "city": "",
+      "country": "Germany",
       "noHover": true
     },
     {
-      "city": "Paris",
-      "country": "France",
       "dot": true,
       "lat": 48.8566,
       "lon": 2.3522,
+      "city": "Paris",
+      "country": "France",
       "noHover": true
     },
     {
-      "city": "",
-      "country": "Romania",
       "dot": true,
       "lat": 44.4268,
       "lon": 26.1025,
+      "city": "",
+      "country": "Romania",
       "noHover": true
     },
     {
-      "city": "",
-      "country": "Italy",
       "dot": true,
       "lat": 41.9028,
       "lon": 12.4964,
+      "city": "",
+      "country": "Italy",
       "noHover": true
     },
     {
-      "city": "",
-      "country": "Thailand",
       "dot": true,
       "lat": 13.7563,
       "lon": 100.5018,
+      "city": "",
+      "country": "Thailand",
       "noHover": true
     },
     {
-      "city": "Sydney",
-      "country": "Australia",
       "dot": true,
       "lat": -33.8688,
       "lon": 151.2093,
+      "city": "Sydney",
+      "country": "Australia",
       "noHover": true
     },
     {
-      "city": "Oxford",
-      "country": "United Kingdom",
       "dot": true,
       "lat": 51.752,
       "lon": -1.2577,
+      "city": "Oxford",
+      "country": "United Kingdom",
       "noHover": true
     },
     {
-      "city": "Bylakuppe",
-      "country": "India",
       "dot": true,
       "lat": 12.4239,
       "lon": 75.9739,
+      "city": "Bylakuppe",
+      "country": "India",
       "noHover": true
     },
     {
-      "city": "Geneva",
-      "country": "Switzerland",
+      "big": true,
       "dot": true,
       "lat": 46.2044,
       "lon": 6.1432,
-      "big": true,
+      "city": "Geneva",
+      "country": "Switzerland",
       "noHover": true
     }
   ]
